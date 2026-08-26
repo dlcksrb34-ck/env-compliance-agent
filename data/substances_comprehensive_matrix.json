@@ -1,0 +1,99 @@
+{
+  "database_name": "대한민국 화학물질관리법 및 화학물질안전원 고시 전 화학물질 규정수량 판정 마스터 엔진",
+  "statute_reference": "화학물질안전원 고시 제2023-10호 「유해화학물질의 규정수량에 관한 규정」 [별표 1] (개별물질 및 유해성 항목별 일반기준)",
+  "general_classification_rules": [
+    {
+      "category": "인체급성유해성물질 (구분 1 - 경구/경피/흡입 급성독성 극심)",
+      "hazard_criteria": "경구 LD50 ≤ 5mg/kg, 흡입 가스 LC50 ≤ 100ppm 등",
+      "lower_tier_kg": 5000,
+      "lower_tier_ton": 5,
+      "upper_tier_kg": 50000,
+      "upper_tier_ton": 50,
+      "small_storage_kg": 1000,
+      "small_storage_ton": 1,
+      "description": "고위험 급성독성 물질 일반 기준 (개별 수량 미지정 물질에 자동 적용)"
+    },
+    {
+      "category": "인체급성유해성물질 (구분 2 - 급성독성/중증 피부부식성)",
+      "hazard_criteria": "경구 LD50 ≤ 50mg/kg, 피부부식성 구분 1A/1B",
+      "lower_tier_kg": 10000,
+      "lower_tier_ton": 10,
+      "upper_tier_kg": 100000,
+      "upper_tier_ton": 100,
+      "small_storage_kg": 3000,
+      "small_storage_ton": 3,
+      "description": "중위험 급성독성/부식성 물질 일반 기준"
+    },
+    {
+      "category": "인체급성유해성물질 (구분 3 - 일반 부식성 및 강염기/강산 수용액)",
+      "hazard_criteria": "피부부식성 구분 1C, 경구 LD50 ≤ 300mg/kg (수산화나트륨, 수산화칼륨, 탄산나트륨 혼합물 등)",
+      "lower_tier_kg": 20000,
+      "lower_tier_ton": 20,
+      "upper_tier_kg": 400000,
+      "upper_tier_ton": 400,
+      "small_storage_kg": 6000,
+      "small_storage_ton": 6,
+      "description": "일반 부식성·염기성 물질 표준 기준"
+    },
+    {
+      "category": "인체만성유해성물질 (발암성 1A/1B, 생식세포 변이원성 1A/1B, 생식독성 1A/1B)",
+      "hazard_criteria": "CMR 물질 (벤젠, 산화에틸렌, 1,3-부타디엔, 트리클로로에틸렌, 카드뮴 화합물 등)",
+      "lower_tier_kg": 10000,
+      "lower_tier_ton": 10,
+      "upper_tier_kg": 100000,
+      "upper_tier_ton": 100,
+      "small_storage_kg": 2000,
+      "small_storage_ton": 2,
+      "description": "만성 CMR 유해성 물질 표준 기준"
+    },
+    {
+      "category": "생태유해성물질 (수생환경 급성/만성 구분 1)",
+      "hazard_criteria": "수생생물 96hr LC50 ≤ 1mg/L (농약원제, 중금속계 수생독성 화합물 등)",
+      "lower_tier_kg": 100000,
+      "lower_tier_ton": 100,
+      "upper_tier_kg": 1000000,
+      "upper_tier_ton": 1000,
+      "small_storage_kg": 20000,
+      "small_storage_ton": 20,
+      "description": "수생 생태독성 유해물질 표준 기준"
+    },
+    {
+      "category": "사고대비물질 (인화성 가스 / 고압가스 / 폭발성 / 급성독성 97종)",
+      "hazard_criteria": "폭발성, 인화점 < 23℃, 고압독성가스 (포스겐, 시안화수소, 염소 등)",
+      "lower_tier_kg": 1000,
+      "lower_tier_ton": 1,
+      "upper_tier_kg": 10000,
+      "upper_tier_ton": 10,
+      "small_storage_kg": 500,
+      "small_storage_ton": 0.5,
+      "description": "사고대비물질 고위험군 표준 기준"
+    }
+  ],
+  "comprehensive_substances_registry": [
+    { "name_ko": "수산화나트륨", "aliases": ["가성소다", "naoh", "양잿물"], "cas_no": "1310-73-2", "category": "인체급성 3", "cutoff": "5%", "lower_t": 20, "upper_t": 400, "small_t": 6 },
+    { "name_ko": "수산화칼륨", "aliases": ["가성가리", "koh"], "cas_no": "1310-58-3", "category": "인체급성 3", "cutoff": "5%", "lower_t": 20, "upper_t": 400, "small_t": 6 },
+    { "name_ko": "염산", "aliases": ["hcl", "염화수소"], "cas_no": "7647-01-0", "category": "인체급성 2 / 사고대비", "cutoff": "10%", "lower_t": 20, "upper_t": 200, "small_t": 6 },
+    { "name_ko": "황산", "aliases": ["h2so4", "유산"], "cas_no": "7664-93-9", "category": "인체급성 2 / 사고대비", "cutoff": "10%", "lower_t": 20, "upper_t": 200, "small_t": 6 },
+    { "name_ko": "질산", "aliases": ["hno3"], "cas_no": "7697-37-2", "category": "인체급성 2 / 사고대비", "cutoff": "10%", "lower_t": 20, "upper_t": 200, "small_t": 6 },
+    { "name_ko": "불산", "aliases": ["불화수소", "hf"], "cas_no": "7664-39-3", "category": "인체급성 1 / 사고대비", "cutoff": "1%", "lower_t": 1, "upper_t": 10, "small_t": 1 },
+    { "name_ko": "암모니아", "aliases": ["nh3", "암모니아수", "수산화암모늄"], "cas_no": "7664-41-7", "category": "인체급성 2 / 사고대비", "cutoff": "10%", "lower_t": 10, "upper_t": 100, "small_t": 3 },
+    { "name_ko": "염소", "aliases": ["cl2", "chlorine"], "cas_no": "7782-50-5", "category": "사고대비 / 급성 1", "cutoff": "고압가스", "lower_t": 1, "upper_t": 10, "small_t": 0.5 },
+    { "name_ko": "포스겐", "aliases": ["phosgene", "cocl2"], "cas_no": "75-44-5", "category": "사고대비 / 급성 1", "cutoff": "0.1%", "lower_t": 0.5, "upper_t": 5, "small_t": 0.1 },
+    { "name_ko": "시안화나트륨", "aliases": ["청화소다", "nacn"], "cas_no": "143-33-9", "category": "사고대비 / 급성 1", "cutoff": "1%", "lower_t": 1, "upper_t": 10, "small_t": 0.5 },
+    { "name_ko": "시안화칼륨", "aliases": ["청산가리", "kcn"], "cas_no": "151-50-8", "category": "사고대비 / 급성 1", "cutoff": "1%", "lower_t": 1, "upper_t": 10, "small_t": 0.5 },
+    { "name_ko": "톨루엔", "aliases": ["메틸벤젠"], "cas_no": "108-88-3", "category": "인체만성 / 사고대비", "cutoff": "85%", "lower_t": 20, "upper_t": 200, "small_t": 6 },
+    { "name_ko": "벤젠", "aliases": ["benzene"], "cas_no": "71-43-2", "category": "인체만성(발암 1A) / 사고대비", "cutoff": "0.1%", "lower_t": 10, "upper_t": 100, "small_t": 2 },
+    { "name_ko": "자일렌", "aliases": ["크실렌", "xylene"], "cas_no": "1330-20-7", "category": "인체급성 3 / 사고대비", "cutoff": "85%", "lower_t": 20, "upper_t": 200, "small_t": 6 },
+    { "name_ko": "메탄올", "aliases": ["메틸알코올"], "cas_no": "67-56-1", "category": "인체급성 3 / 사고대비", "cutoff": "0.3%", "lower_t": 20, "upper_t": 200, "small_t": 6 },
+    { "name_ko": "폼알데하이드", "aliases": ["포름알데히드", "포르말린"], "cas_no": "50-00-0", "category": "인체만성(발암 1A) / 사고대비", "cutoff": "1%", "lower_t": 10, "upper_t": 100, "small_t": 2 },
+    { "name_ko": "과산화수소", "aliases": ["h2o2"], "cas_no": "7722-84-1", "category": "인체급성 2 / 사고대비", "cutoff": "35%", "lower_t": 20, "upper_t": 200, "small_t": 6 },
+    { "name_ko": "페놀", "aliases": ["석탄산", "phenol"], "cas_no": "108-95-2", "category": "인체급성 2 / 사고대비", "cutoff": "5%", "lower_t": 10, "upper_t": 100, "small_t": 3 },
+    { "name_ko": "트리클로로에틸렌", "aliases": ["tce"], "cas_no": "79-01-6", "category": "인체만성(발암 1A) / 제한물질", "cutoff": "0.1%", "lower_t": 10, "upper_t": 100, "small_t": 2 },
+    { "name_ko": "디클로로메탄", "aliases": ["dcm", "염화메틸렌"], "cas_no": "75-09-2", "category": "인체만성(발암 2) / 사고대비", "cutoff": "0.1%", "lower_t": 20, "upper_t": 200, "small_t": 6 },
+    { "name_ko": "아크릴로니트릴", "aliases": ["an"], "cas_no": "107-13-1", "category": "사고대비 / 발암 1B", "cutoff": "0.1%", "lower_t": 5, "upper_t": 50, "small_t": 1 },
+    { "name_ko": "황화수소", "aliases": ["h2s"], "cas_no": "7783-06-4", "category": "사고대비 / 급성 1", "cutoff": "고압가스", "lower_t": 1, "upper_t": 10, "small_t": 0.5 },
+    { "name_ko": "이황화탄소", "aliases": ["cs2"], "cas_no": "75-15-0", "category": "사고대비 / 인체만성", "cutoff": "1%", "lower_t": 5, "upper_t": 50, "small_t": 1 },
+    { "name_ko": "산화에틸렌", "aliases": ["eo"], "cas_no": "75-21-8", "category": "사고대비 / 발암 1A", "cutoff": "0.1%", "lower_t": 1, "upper_t": 10, "small_t": 0.5 },
+    { "name_ko": "1,3-부타디엔", "aliases": ["부타디엔"], "cas_no": "106-99-0", "category": "사고대비 / 발암 1A", "cutoff": "0.1%", "lower_t": 1, "upper_t": 10, "small_t": 0.5 }
+  ]
+}

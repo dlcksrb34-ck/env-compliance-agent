@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ECO-COMPLIANCE AI | 대한민국 환경법 통합 컴플라이언스 AI 어시스턴트</title>
+  <meta name="description" content="화학물질관리법, 화평법, 대기법, 수질법, 폐기물법 등 대한민국 주요 환경 규제 전문 학습 기반 환경법 통합 AI 컴플라이언스 솔루션">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+  <!-- App Container -->
+  <div class="app-container">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">ECO-COMPLIANCE</span>
+          <span class="brand-sub">환경법 통합 AI 에이전트</span>
+        </div>
+      </div>
+
+      <!-- Law Selector Box -->
+      <div class="law-selector-box">
+        <label class="law-selector-label">⚖️ 적용 환경법령</label>
+        <select class="form-control law-dropdown" id="global-law-select">
+          <option value="cca">🟢 화학물질관리법 (화관법)</option>
+          <option value="kreach">🧪 화학물질등록평가법 (화평법)</option>
+          <option value="air">🏭 대기환경보전법 (대기법) [준비중]</option>
+          <option value="water">💧 물환경보전법 (수질법) [준비중]</option>
+          <option value="waste">♻️ 폐기물관리법 (폐기물법) [준비중]</option>
+          <option value="integrated">🏛️ 통합환경관리법 [준비중]</option>
+        </select>
+      </div>
+
+      <div class="db-status-card">
+        <div class="status-indicator">
+          <span class="pulse-dot"></span>
+          <span class="status-text" id="engine-status-text">로컬 법령 RAG 가동 중</span>
+        </div>
+        <div class="db-meta">
+          <span id="model-mode-badge">로컬 룰 엔진</span>
+          <span class="version-tag" id="current-law-badge">화관법 2025 개정판</span>
+        </div>
+      </div>
+
+      <nav class="nav-menu">
+        <button class="nav-item" data-tab="hub" id="tab-btn-hub">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+          </svg>
+          <span>6대 환경법 허브</span>
+          <span class="badge-new" style="background:#4f46e5;color:#fff">PORTAL</span>
+        </button>
+
+        <button class="nav-item active" data-tab="chat" id="tab-btn-chat">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+          <span>AI 법률 상담</span>
+          <span class="badge-new">AI</span>
+        </button>
+
+        <button class="nav-item" data-tab="calculator" id="tab-btn-calc">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="4" y="2" width="16" height="20" rx="2"></rect>
+            <line x1="8" y1="6" x2="16" y2="6"></line>
+            <line x1="16" y1="14" x2="16" y2="18"></line>
+            <path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"></path>
+          </svg>
+          <span>과태료·처분 계산기</span>
+        </button>
+
+        <button class="nav-item" data-tab="statutes" id="tab-btn-statutes">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+          </svg>
+          <span>3단 법령 뷰어</span>
+        </button>
+
+        <button class="nav-item" data-tab="checklist" id="tab-btn-checklist">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 11l3 3L22 4"></path>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+          </svg>
+          <span>컴플라이언스 점검</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="theme-toggle" id="theme-toggle-btn" title="테마 변경">
+          <span class="theme-label">🌙 다크 모드</span>
+          <div class="toggle-switch active"></div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- Top Header -->
+      <header class="top-header">
+        <div class="header-left">
+          <div class="active-law-pill" id="header-law-pill">
+            <span class="pill-dot"></span>
+            <span id="header-law-title">🌿 화학물질관리법 (화관법) 모드</span>
+          </div>
+          <h1 class="page-title" id="page-title">화학물질관리법 AI 법률 상담</h1>
+          <p class="page-subtitle" id="page-subtitle">수입 전 확인명세서, 인허가, 정기검사, 과태료 및 벌칙 기준을 실시간 분석합니다.</p>
+        </div>
+        <div class="header-actions">
+          <!-- Manual Button -->
+          <a href="manual.html" target="_blank" class="btn btn-secondary btn-sm" id="btn-open-manual" title="사용자 매뉴얼 열기">
+            📘 통합 매뉴얼
+          </a>
+
+          <!-- API Key Button -->
+          <button class="btn btn-secondary btn-sm" id="btn-open-api-modal">
+            <span class="key-status-dot" id="header-key-dot"></span>
+            <span id="header-key-text">🔑 OpenAI API 연동</span>
+          </button>
+
+          <button class="btn btn-secondary btn-sm" id="btn-export-report" title="상담 보고서 내보내기">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            보고서 인쇄/PDF
+          </button>
+        </div>
+      </header>
+
+      <!-- TAB 0: 6 Core Environmental Laws Hub (Portal) -->
+      <section class="tab-panel" id="tab-hub">
+        <div class="hub-layout">
+          <div class="hub-intro-card card">
+            <div class="hub-intro-content">
+              <h2>🏛️ 대한민국 6대 핵심 환경법 통합 포털</h2>
+              <p>사업장 인허가, 배출시설 설치, 화학안전, 폐기물 처리, 자가측정 등 대한민국 주요 환경 규제를 하나의 통합 플랫폼에서 진단하고 관리합니다.</p>
+            </div>
+            <div class="hub-stats-badge">
+              <span class="badge-title">총 관리 법령</span>
+              <span class="badge-num">6대 법률</span>
+            </div>
+          </div>
+
+          <!-- Laws Grid -->
+          <div class="laws-grid" id="laws-grid-container">
+            <!-- Loaded dynamically from /api/laws -->
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 1: AI Legal Consultation Chat -->
+      <section class="tab-panel active" id="tab-chat">
+        <div class="chat-layout">
+          <!-- Chat Window -->
+          <div class="chat-container card">
+            
+            <!-- Quick Chips -->
+            <div class="quick-chips-wrapper">
+              <span class="chips-label">💡 자주 묻는 실무 질문:</span>
+              <div class="chips-list">
+                <button class="chip" data-prompt="수입제품 확인명세서 1건 제출을 누락했는데 관련된 법기준과 처벌 기준이 어떻게 되나요?">
+                  🚨 확인명세서 누락 과태료
+                </button>
+                <button class="chip" data-prompt="수산화나트륨 10톤 저장탱크를 옥외에 설치하려고해. 준수해야하는 방류벽이나 세안시설, 감지시설 등 법적 시설 기준 알려줘">
+                  🏗️ 10톤 탱크 방류벽·세안기 설치기준
+                </button>
+                <button class="chip" data-prompt="유해화학물질 취급시설 정기검사 기준과 주기 알려줘">
+                  🔍 정기검사 주기 (2025 개정)
+                </button>
+                <button class="chip" data-prompt="사고대비물질 보관장소 잠금장치 안했을때 처벌조항 알려줘">
+                  🔒 보관장소 잠금장치 미설치 처벌
+                </button>
+                <button class="chip" data-prompt="1톤 트럭으로 질산 500kg 이송 시 운반계획서 제출해야 해?">
+                  🚚 1톤 트럭 소량운반 기준
+                </button>
+                <button class="chip" data-prompt="보관창고에서 황산이랑 가성소다, 톨루엔을 같은 칸에 같이 보관해도 돼?">
+                  ⛔ 산-알칼리-인화성 혼적금지
+                </button>
+              </div>
+            </div>
+
+            <!-- Messages Stream Area -->
+            <div class="messages-container" id="messages-container">
+              <!-- Welcome AI Message -->
+              <div class="message-row bot-row">
+                <div class="avatar bot-avatar">⚖️</div>
+                <div class="message-bubble bot-bubble">
+                  <div class="bot-header">
+                    <span class="bot-name" id="chat-welcome-bot-name">ECO-COMPLIANCE AI (화학물질관리법 모드)</span>
+                    <span class="bot-time">지금</span>
+                  </div>
+                  <div class="bot-content">
+                    <p>안녕하세요! <strong>대한민국 환경법 통합 컴플라이언스 AI 에이전트</strong>입니다.</p>
+                    <p>현재 <strong>화학물질관리법(2025년 최신 전면 개정판)</strong>이 100% 완전 가동 중입니다. 취급시설 설계기준(방류벽, 비상세안, 감지기), 인허가 구분, 정기검사 주기, 확인명세서 누락, 과태료 및 50% 감경 방안 등을 자유롭게 질문해 주세요.</p>
+                    <div class="llm-hint-box" id="llm-hint-banner">
+                      💡 <strong>OpenAI API 키</strong>를 등록하시면 <strong>GPT-5.5 / GPT-5 / GPT-4o</strong>가 로컬 법령을 실시간으로 함께 검토하여 더 유연하고 지능적인 심층 법률 자문을 제공합니다. (우측 상단 <code>🔑 OpenAI API 연동</code> 버튼 클릭)
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Chat Input Form -->
+            <form class="chat-input-form" id="chat-form">
+              <div class="input-wrapper">
+                <textarea 
+                  id="chat-input" 
+                  rows="2" 
+                  placeholder="예: 수산화나트륨 10톤 옥외저장탱크 설치 시 방류벽 용량과 비상세안설비 기준 알려줘"
+                  required
+                ></textarea>
+                <button type="submit" class="btn-send" id="btn-submit-chat" title="질문 전송">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                  </svg>
+                </button>
+              </div>
+              <div class="input-helper">
+                <span>⚡ Enter로 전송 (Shift+Enter 줄바꿈)</span>
+                <span class="legal-disclaimer">※ 본 답변은 법령 및 고시 데이터를 바탕으로 한 실무 가이드이며 공식 유권해석을 대체하지 않습니다.</span>
+              </div>
+            </form>
+          </div>
+
+          <!-- Side Context & Action Panel -->
+          <div class="side-context-panel">
+            <div class="card context-card" id="context-card">
+              <div class="card-header">
+                <h3>📌 실시간 법률 진단 요약</h3>
+              </div>
+              <div class="card-body" id="side-context-body">
+                <div class="empty-context">
+                  <div class="empty-icon">💡</div>
+                  <p>질문을 입력하시면 관련 법령 조항, 처벌 기준, 기술지침이 실시간으로 요약됩니다.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick Laws Info Card -->
+            <div class="card info-card">
+              <div class="card-header">
+                <h3>🏛️ 6대 환경법 적용 현황</h3>
+              </div>
+              <div class="card-body">
+                <ul class="law-quick-list" id="side-laws-quick-list">
+                  <li class="active"><span class="badge-dot active"></span> <strong>화학물질관리법</strong>: 🟢 풀가동 중</li>
+                  <li class="active"><span class="badge-dot active"></span> <strong>화학물질등록평가법</strong>: 🟢 풀가동 중</li>
+                  <li><span class="badge-dot ready"></span> <strong>대기환경보전법</strong>: ⚪ 준비 중</li>
+                  <li><span class="badge-dot ready"></span> <strong>물환경보전법</strong>: ⚪ 준비 중</li>
+                  <li><span class="badge-dot ready"></span> <strong>폐기물관리법</strong>: ⚪ 준비 중</li>
+                  <li><span class="badge-dot ready"></span> <strong>통합환경관리법</strong>: ⚪ 준비 중</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: Penalty & Administrative Disposition Calculator -->
+      <section class="tab-panel" id="tab-calculator">
+        <div class="calc-layout">
+          <div class="calc-form-card card">
+            <div class="card-header">
+              <h2>🧮 화관법 위반 과태료 및 행정처분 시뮬레이터</h2>
+              <p>위반 사안을 선택하고 차수 및 감경 사유를 적용하여 예상 처벌을 산출합니다.</p>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="calc-violation-select">위반 행위 (15대 주요 사안)</label>
+                <select id="calc-violation-select" class="form-control">
+                  <option value="">-- 위반 사안을 선택해 주세요 --</option>
+                </select>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-half">
+                  <label>위반 차수</label>
+                  <div class="radio-group">
+                    <label class="radio-label">
+                      <input type="radio" name="calc-offense" value="1" checked> 1차 위반
+                    </label>
+                    <label class="radio-label">
+                      <input type="radio" name="calc-offense" value="2"> 2차 위반
+                    </label>
+                    <label class="radio-label">
+                      <input type="radio" name="calc-offense" value="3"> 3차 이상
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-group col-half">
+                  <label>과태료 감경 적용 옵션</label>
+                  <div class="checkbox-group">
+                    <label class="checkbox-label">
+                      <input type="checkbox" id="calc-mitigation-fault" checked>
+                      <span>최초 위반 / 단순 과실 소명 (최대 50% 감경)</span>
+                    </label>
+                    <label class="checkbox-label">
+                      <input type="checkbox" id="calc-early-pay" checked>
+                      <span>의견제출 기한 내 자진납부 (20% 추가 감경)</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <button class="btn btn-primary btn-block" id="btn-run-calc">
+                ⚡ 과태료 및 행정처분 산출 실행
+              </button>
+            </div>
+          </div>
+
+          <div class="calc-result-card card" id="calc-result-container">
+            <div class="empty-result">
+              <div class="calc-icon">🧮</div>
+              <h3>위반 사안을 선택하고 계산을 실행해 주세요.</h3>
+              <p>법정 과태료, 질서위반행위규제법 감경액, 시행규칙 [별표 7] 행정처분 단계가 실시간으로 분석됩니다.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: 3-Tier Statute Explorer -->
+      <section class="tab-panel" id="tab-statutes">
+        <div class="statutes-layout">
+          
+          <div class="statute-search-bar card">
+            <div class="search-input-box">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" id="statute-search-input" placeholder="조항 번호 또는 검색어 입력 (예: 제9조, 제33조, 확인명세서, 과태료, 별표 2, 방류벽)">
+            </div>
+            <div class="filter-pills">
+              <button class="pill active" data-filter="all">전체</button>
+              <button class="pill" data-filter="act">화관법 (법률)</button>
+              <button class="pill" data-filter="decree">시행령 & 별표 2</button>
+              <button class="pill" data-filter="rule">시행규칙 & 별표 7</button>
+              <button class="pill" data-filter="notices">환경부/안전원 고시</button>
+            </div>
+          </div>
+
+          <div class="statutes-content-grid" id="statutes-container">
+            <!-- Dynamic Statute Cards loaded here -->
+            <div class="loading-spinner">법령 데이터를 불러오는 중...</div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- TAB 4: Compliance Checklist -->
+      <section class="tab-panel" id="tab-checklist">
+        <div class="checklist-layout">
+          
+          <div class="checklist-header-card card">
+            <div class="progress-info">
+              <div class="progress-labels">
+                <span class="progress-title">화관법 필수 의무 이행 진척도</span>
+                <span class="progress-percent" id="checklist-percent">0%</span>
+              </div>
+              <div class="progress-bar-track">
+                <div class="progress-bar-fill" id="checklist-bar" style="width: 0%;"></div>
+              </div>
+            </div>
+            <div class="checklist-actions">
+              <button class="btn btn-secondary btn-sm" id="btn-reset-checklist">진행상태 초기화</button>
+            </div>
+          </div>
+
+          <div class="checklist-stages-container" id="checklist-container">
+            <!-- Stages loaded dynamically -->
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- Law Preview / Coming Soon Modal -->
+  <div class="modal-overlay" id="law-preview-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title-box">
+          <span class="modal-icon" id="preview-modal-icon">🧪</span>
+          <h3 id="preview-modal-title">법령 상세 안내</h3>
+        </div>
+        <button class="btn-close-modal" id="btn-close-law-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="law-status-tag" id="preview-modal-status">⚪ 서비스 준비 중</div>
+        <p class="modal-desc" id="preview-modal-desc"></p>
+        
+        <h4 style="margin: 1.2rem 0 0.6rem 0; color: #a5b4fc;">📋 주요 규제 영역 및 지원 예정 기능</h4>
+        <ul id="preview-modal-topics" style="margin-left: 20px; color: #cbd5e1; line-height: 1.8;"></ul>
+
+        <div class="modal-actions" style="margin-top: 1.5rem;">
+          <button type="button" class="btn btn-primary" id="btn-preview-switch-cca">🟢 화학물질관리법 모드로 전환</button>
+          <button type="button" class="btn btn-secondary" id="btn-close-law-preview-btn">닫기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OpenAI API Key & Model Settings Modal -->
+  <div class="modal-overlay" id="api-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title-box">
+          <span class="modal-icon">🤖</span>
+          <h3>OpenAI API & GPT 모델 선택</h3>
+        </div>
+        <button class="btn-close-modal" id="btn-close-api-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-desc">
+          OpenAI API 키를 등록하면, 로컬 환경법령 DB 검색 데이터와 함께 <strong>최신 GPT 모델(GPT-5.5, GPT-5, o3-mini, GPT-4o 등)</strong>이 심층 법률 검토를 수행합니다.
+        </p>
+
+        <div class="form-group">
+          <label for="input-api-key">OpenAI API Key</label>
+          <div class="input-key-wrapper">
+            <input type="password" id="input-api-key" class="form-control" placeholder="sk-proj-..." autocomplete="off">
+            <button type="button" class="btn btn-secondary btn-sm" id="btn-toggle-key-visibility">보기</button>
+          </div>
+          <span class="form-help">※ 입력하신 키는 브라우저 로컬 저장소(localStorage)에만 안전하게 보관됩니다.</span>
+        </div>
+
+        <div class="form-group">
+          <label for="select-model">LLM 모델 선택 (최대 GPT-5.5 지원)</label>
+          <select id="select-model" class="form-control">
+            <optgroup label="🌟 차세대 플래그십 (GPT-5.5 / GPT-5 시리즈)">
+              <option value="gpt-5.5" selected>gpt-5.5 (최고 사양 플래그십 - 심층 법률 분석)</option>
+              <option value="gpt-5">gpt-5 (차세대 표준 모델)</option>
+              <option value="gpt-5-mini">gpt-5-mini (경량 고속 차세대 모델)</option>
+            </optgroup>
+            <optgroup label="🧠 고급 추론 특화 (Reasoning Models)">
+              <option value="o3-mini">o3-mini (최신 복합 규제 추론 모델)</option>
+              <option value="o1">o1 (심층 다단계 법리 분석 모델)</option>
+            </optgroup>
+            <optgroup label="⚡ 안정형 표준 (GPT-4o 시리즈)">
+              <option value="gpt-4o">gpt-4o (옴니 플래그십)</option>
+              <option value="gpt-4o-mini">gpt-4o-mini (고속·경제적 모델)</option>
+            </optgroup>
+            <optgroup label="🛠️ 사용자 직접 입력">
+              <option value="custom">직접 모델명 입력...</option>
+            </optgroup>
+          </select>
+        </div>
+
+        <div class="form-group" id="custom-model-group" style="display: none;">
+          <label for="input-custom-model">직접 입력할 모델 ID</label>
+          <input type="text" id="input-custom-model" class="form-control" placeholder="예: gpt-5.5, ft:gpt-4o-..." />
+        </div>
+
+        <div id="modal-test-status" class="test-status-box" style="display: none;"></div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" id="btn-test-key">연결 테스트</button>
+          <button type="button" class="btn btn-danger" id="btn-clear-key">키 삭제 (로컬 모드)</button>
+          <button type="button" class="btn btn-primary" id="btn-save-key">저장 및 활성화</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

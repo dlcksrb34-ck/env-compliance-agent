@@ -1,0 +1,167 @@
+{
+  "database_name": "화학물질관리법 주요 유해화학물질 규정수량 및 소량취급기준 DB (2025년 최신)",
+  "substances": [
+    {
+      "name_ko": "수산화나트륨",
+      "name_en": "Sodium hydroxide",
+      "aliases": ["가성소다", "naoh", "양잿물", "수산화나트륨 수용액"],
+      "cas_no": "1310-73-2",
+      "hazard_category": "인체급성유해성물질 (부식성/강염기)",
+      "regulation_cutoff_pct": "5% 이상",
+      "threshold_quantities": {
+        "lower_tier_kg": 20000,
+        "lower_tier_ton": 20,
+        "upper_tier_kg": 400000,
+        "upper_tier_ton": 400,
+        "small_storage_kg": 6000,
+        "small_storage_ton": 6,
+        "small_daily_kg": 400
+      },
+      "guidelines": "5% 이상 함유 시 유해화학물질(인체급성유해성물질)로 관리됨. 저장탱크가 20톤(20,000kg) 미만인 경우 하위 규정수량 미만이므로 화학사고예방관리계획서 제출 면제 및 2025 개정 영업신고/2년 주기 정기검사 대상임. 방류벽은 저장탱크 용량의 110%(10톤 탱크 시 11톤 이상) 확보 필수."
+    },
+    {
+      "name_ko": "염산",
+      "name_en": "Hydrochloric acid",
+      "aliases": ["hcl", "염화수소", "염화수소산"],
+      "cas_no": "7647-01-0",
+      "hazard_category": "인체급성유해성물질 / 사고대비물질",
+      "regulation_cutoff_pct": "10% 이상",
+      "threshold_quantities": {
+        "lower_tier_kg": 20000,
+        "lower_tier_ton": 20,
+        "upper_tier_kg": 200000,
+        "upper_tier_ton": 200,
+        "small_storage_kg": 6000,
+        "small_storage_ton": 6,
+        "small_daily_kg": 400
+      },
+      "guidelines": "10% 이상 유해화학물질, 20% 이상 사고대비물질. 하위 규정수량 20톤(20,000kg)."
+    },
+    {
+      "name_ko": "황산",
+      "name_en": "Sulfuric acid",
+      "aliases": ["h2so4", "유산"],
+      "cas_no": "7664-93-9",
+      "hazard_category": "인체급성유해성물질 / 사고대비물질",
+      "regulation_cutoff_pct": "10% 이상",
+      "threshold_quantities": {
+        "lower_tier_kg": 20000,
+        "lower_tier_ton": 20,
+        "upper_tier_kg": 200000,
+        "upper_tier_ton": 200,
+        "small_storage_kg": 6000,
+        "small_storage_ton": 6,
+        "small_daily_kg": 400
+      },
+      "guidelines": "10% 이상 유해화학물질. 하위 규정수량 20톤."
+    },
+    {
+      "name_ko": "질산",
+      "name_en": "Nitric acid",
+      "aliases": ["hno3"],
+      "cas_no": "7697-37-2",
+      "hazard_category": "인체급성유해성물질 / 사고대비물질",
+      "regulation_cutoff_pct": "10% 이상",
+      "threshold_quantities": {
+        "lower_tier_kg": 20000,
+        "lower_tier_ton": 20,
+        "upper_tier_kg": 200000,
+        "upper_tier_ton": 200,
+        "small_storage_kg": 6000,
+        "small_storage_ton": 6,
+        "small_daily_kg": 400
+      },
+      "guidelines": "10% 이상 유해화학물질. 하위 규정수량 20톤."
+    },
+    {
+      "name_ko": "불화수소",
+      "name_en": "Hydrogen fluoride",
+      "aliases": ["불산", "hf", "불화수소산"],
+      "cas_no": "7664-39-3",
+      "hazard_category": "인체급성유해성물질 / 사고대비물질",
+      "regulation_cutoff_pct": "1% 이상",
+      "threshold_quantities": {
+        "lower_tier_kg": 1000,
+        "lower_tier_ton": 1,
+        "upper_tier_kg": 10000,
+        "upper_tier_ton": 10,
+        "small_storage_kg": 1000,
+        "small_storage_ton": 1,
+        "small_daily_kg": 100
+      },
+      "guidelines": "1% 이상 유해화학물질/사고대비물질. 고위험물질로 하위 규정수량이 1톤(1,000kg)으로 매우 엄격함."
+    },
+    {
+      "name_ko": "암모니아",
+      "name_en": "Ammonia",
+      "aliases": ["nh3", "암모니아수", "수산화암모늄"],
+      "cas_no": "7664-41-7",
+      "hazard_category": "인체급성유해성물질 / 사고대비물질",
+      "regulation_cutoff_pct": "10% 이상(수용액) / 무수물",
+      "threshold_quantities": {
+        "lower_tier_kg": 10000,
+        "lower_tier_ton": 10,
+        "upper_tier_kg": 100000,
+        "upper_tier_ton": 100,
+        "small_storage_kg": 3000,
+        "small_storage_ton": 3,
+        "small_daily_kg": 200
+      },
+      "guidelines": "10% 이상 유해화학물질, 25% 이상 사고대비물질. 하위 규정수량 10톤(10,000kg)."
+    },
+    {
+      "name_ko": "톨루엔",
+      "name_en": "Toluene",
+      "aliases": ["메틸벤젠"],
+      "cas_no": "108-88-3",
+      "hazard_category": "인체만성유해성물질 / 사고대비물질 / 제한물질",
+      "regulation_cutoff_pct": "85% 이상(유독), 환각물질",
+      "threshold_quantities": {
+        "lower_tier_kg": 20000,
+        "lower_tier_ton": 20,
+        "upper_tier_kg": 200000,
+        "upper_tier_ton": 200,
+        "small_storage_kg": 6000,
+        "small_storage_ton": 6,
+        "small_daily_kg": 400
+      },
+      "guidelines": "하위 규정수량 20톤."
+    },
+    {
+      "name_ko": "메탄올",
+      "name_en": "Methanol",
+      "aliases": ["메틸알코올"],
+      "cas_no": "67-56-1",
+      "hazard_category": "인체급성유해성물질 / 사고대비물질",
+      "regulation_cutoff_pct": "0.3% 이상",
+      "threshold_quantities": {
+        "lower_tier_kg": 20000,
+        "lower_tier_ton": 20,
+        "upper_tier_kg": 200000,
+        "upper_tier_ton": 200,
+        "small_storage_kg": 6000,
+        "small_storage_ton": 6,
+        "small_daily_kg": 400
+      },
+      "guidelines": "0.3% 이상 유독물질. 하위 규정수량 20톤."
+    },
+    {
+      "name_ko": "수산화칼륨",
+      "name_en": "Potassium hydroxide",
+      "aliases": ["가성가리", "koh"],
+      "cas_no": "1310-58-3",
+      "hazard_category": "인체급성유해성물질 (부식성)",
+      "regulation_cutoff_pct": "5% 이상",
+      "threshold_quantities": {
+        "lower_tier_kg": 20000,
+        "lower_tier_ton": 20,
+        "upper_tier_kg": 400000,
+        "upper_tier_ton": 400,
+        "small_storage_kg": 6000,
+        "small_storage_ton": 6,
+        "small_daily_kg": 400
+      },
+      "guidelines": "5% 이상 유해화학물질. 하위 규정수량 20톤."
+    }
+  ]
+}

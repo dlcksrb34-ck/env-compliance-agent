@@ -1,0 +1,260 @@
+{
+  "statute": "화학물질의 등록 및 평가 등에 관한 법률 (화평법)",
+  "version": "2025.1.1",
+  "items": [
+    {
+      "id": "KREACH-001",
+      "title": "연간 1톤 이상 기존화학물질 무등록 제조·수입",
+      "category": "등록 의무 위반",
+      "statute_basis": "화평법 제10조제1항, 제49조제1호, 제35조",
+      "criminal_penalty": "5년 이하의 징역 또는 1억원 이하의 벌금 (동일품목 매출액의 최대 5% 이하 과징금 병과 가능)",
+      "administrative_fine": null,
+      "administrative_disposition": {
+        "statute": "시행규칙 제61조 [별표 7]",
+        "first_offense": "1차: 제조·수입·판매 중지명령 및 회수명령",
+        "second_offense": "2차: 영업정지 1개월",
+        "third_offense": "3차: 영업정지 3개월"
+      },
+      "mitigation_options": [
+        "사전신고 완료 물질인 경우 유예기간 확인 후 소명",
+        "자진신고 및 즉시 제조·수입 중단 후 긴급 등록신청 시 형사처벌 정상참작",
+        "질서위반행위규제법 및 행정절차법상 과징금 감경 신청"
+      ],
+      "practical_action_steps": [
+        "1. 해당 화학물질의 수입 및 공정 투입 즉시 중단",
+        "2. 화학물질정보처리시스템(K-REACH 포털)에서 공동등록 협의체(CICO) 가입 확인",
+        "3. 대표등록자에게 연락하여 시험자료 사용권(LOA) 구매 및 개별제출자료 준비",
+        "4. 관할 환경청 및 국립환경과학원에 자진신고서 및 등록추진계획서 제출"
+      ]
+    },
+    {
+      "id": "KREACH-002",
+      "title": "연간 100kg 이상 신규화학물질 무등록 제조·수입",
+      "category": "신규물질 등록 위반",
+      "statute_basis": "화평법 제10조제1항제1호, 제49조제1호",
+      "criminal_penalty": "5년 이하의 징역 또는 1억원 이하의 벌금",
+      "administrative_fine": null,
+      "administrative_disposition": {
+        "statute": "화평법 제45조",
+        "first_offense": "1차: 제조·수입 중지 및 회수·폐기명령",
+        "second_offense": "2차: 고발 조치",
+        "third_offense": "3차: 시설 폐쇄명령"
+      },
+      "mitigation_options": [
+        "신규성 착오(CAS 번호 매핑 오류) 소명",
+        "R&D 또는 시약용인 경우 사후 등록면제확인 소급 인정 신청"
+      ],
+      "practical_action_steps": [
+        "1. 세관 통관 및 제조라인 즉시 봉인",
+        "2. 국립환경과학원에 신규화학물질 유해성 시험자료 확보 및 등록신청서 접수",
+        "3. 시험연구용(R&D) 해당 여부 긴급 검토"
+      ]
+    },
+    {
+      "id": "KREACH-003",
+      "title": "연간 100kg 미만 소량 신규화학물질 무신고 제조·수입",
+      "category": "신규물질 신고 위반",
+      "statute_basis": "화평법 제10조의2, 제52조제1호",
+      "criminal_penalty": "1년 이하의 징역 또는 1천만원 이하의 벌금",
+      "administrative_fine": null,
+      "administrative_disposition": {
+        "statute": "화평법 제45조",
+        "first_offense": "1차: 제조·수입 중지명령 및 신고 이행명령",
+        "second_offense": "2차: 고발 조치",
+        "third_offense": "3차: 사용중지명령"
+      },
+      "mitigation_options": [
+        "100kg 미만 극소량 입증 및 단순 착오 소명 시 기소유예 가능성 높음"
+      ],
+      "practical_action_steps": [
+        "1. 국립환경과학원 화학물질정보처리시스템 접속",
+        "2. 신규화학물질 신고서(소량) 온라인 즉시 작성 및 제출 (처리기간 3일~7일)",
+        "3. 신고증명서 발급 전까지 통관 보류"
+      ]
+    },
+    {
+      "id": "KREACH-004",
+      "title": "연구개발(R&D) / 수출용 등록면제확인 미이행",
+      "category": "면제확인 위반",
+      "statute_basis": "화평법 제11조제1항, 제52조제2호",
+      "criminal_penalty": "1년 이하의 징역 또는 1천만원 이하의 벌금",
+      "administrative_fine": null,
+      "administrative_disposition": {
+        "statute": "화평법 제45조",
+        "first_offense": "1차: 개선명령 (면제확인 사후 소급 신청)",
+        "second_offense": "2차: 수입중지",
+        "third_offense": "3차: 고발"
+      },
+      "mitigation_options": [
+        "한국화학물질관리협회(KCMA)에 면제확인 자진신고 및 즉시 사후 접수 시 벌칙 면제 가능"
+      ],
+      "practical_action_steps": [
+        "1. KCMA 화학물질정보처리시스템에서 'R&D 등록면제확인신청서' 즉시 접수",
+        "2. 연구계획서, 연구시설 증빙, 사용 후 잔여폐액 폐기계획서 첨부",
+        "3. 면제확인증 발급 후 관할청에 소명자료 제출"
+      ]
+    },
+    {
+      "id": "KREACH-005",
+      "title": "제조·수입량 톤수 범위 및 용도 변경등록 미이행",
+      "category": "변경등록 위반",
+      "statute_basis": "화평법 제12조제1항, 제50조제1호",
+      "criminal_penalty": "3년 이하의 징역 또는 5천만원 이하의 벌금",
+      "administrative_fine": null,
+      "administrative_disposition": {
+        "statute": "화평법 제45조",
+        "first_offense": "1차: 변경등록 이행명령",
+        "second_offense": "2차: 제조·수입 중지",
+        "third_offense": "3차: 영업정지 1개월"
+      },
+      "mitigation_options": [
+        "톤수 초과 발생일로부터 1개월 이내 자진 변경등록 신청 시 행정지도 종결"
+      ],
+      "practical_action_steps": [
+        "1. 연간 누적 제조·수입량 재산정 (10톤 초과 시 위해성평가 대상 여부 확인)",
+        "2. 추가된 톤수 범위에 맞는 시험성적서 보완 및 변경등록 신청 접수"
+      ]
+    },
+    {
+      "id": "KREACH-006",
+      "title": "화학물질 양도 시 정보제공(제29조) 미이행",
+      "category": "정보제공 의무 위반",
+      "statute_basis": "화평법 제29조제1항, 제54조제1항제1호, 영 [별표 2] 가목",
+      "criminal_penalty": "해당 없음 (행정질서벌 우선)",
+      "administrative_fine": {
+        "statute": "화평법 시행령 제24조 [별표 2] 가목",
+        "first_offense": 6000000,
+        "second_offense": 8000000,
+        "third_offense": 10000000,
+        "first_offense_str": "600만원",
+        "second_offense_str": "800만원",
+        "third_offense_str": "1,000만원"
+      },
+      "administrative_disposition": {
+        "statute": "화평법 제45조",
+        "first_offense": "1차: 시정명령 (정보제공 즉시 보완)",
+        "second_offense": "2차: 경고",
+        "third_offense": "3차: 과태료 가중부과"
+      },
+      "mitigation_options": [
+        "양수자에게 등록번호 및 유해성정보 소급 서면 통지 완료 증빙 제출 시 50% 감경 (300만원)",
+        "의견제출 기한 내 자진납부 시 추가 20% 감경 (최종 240만원)"
+      ],
+      "practical_action_steps": [
+        "1. MSDS(물질안전보건자료) 제15조(법적규제) 및 제1조에 등록번호/신고번호 표기",
+        "2. 모든 구매 업체(양수자)에 개정된 MSDS 및 안전정보 공문 전자발송 및 수신확인증 보관"
+      ]
+    },
+    {
+      "id": "KREACH-007",
+      "title": "하위사용자 용도 정보 제공(제30조) 미이행",
+      "category": "하위사용자 의무 위반",
+      "statute_basis": "화평법 제30조, 제54조제1항제2호, 영 [별표 2] 나목",
+      "criminal_penalty": "해당 없음",
+      "administrative_fine": {
+        "statute": "화평법 시행령 제24조 [별표 2] 나목",
+        "first_offense": 6000000,
+        "second_offense": 8000000,
+        "third_offense": 10000000,
+        "first_offense_str": "600만원",
+        "second_offense_str": "800만원",
+        "third_offense_str": "1,000만원"
+      },
+      "administrative_disposition": {
+        "statute": "화평법 제45조",
+        "first_offense": "1차: 시정명령",
+        "second_offense": "2차: 경고",
+        "third_offense": "3차: 과태료 가중"
+      },
+      "mitigation_options": [
+        "제조·수입자에게 용도 및 사용량 정보 즉시 회신 완료 시 50% 감경"
+      ],
+      "practical_action_steps": [
+        "1. 공급사가 요청한 용도분류체계표에 맞춰 실제 사용 공정 및 용도코드 회신",
+        "2. 회신 공문 사본 5년간 사내 보관"
+      ]
+    },
+    {
+      "id": "KREACH-008",
+      "title": "국외대리인(OR) 선임·해임 미신고 및 수입자 미통보",
+      "category": "국외대리인 위반",
+      "statute_basis": "화평법 제38조제2항, 제54조제1항제3호, 영 [별표 2] 다목",
+      "criminal_penalty": "해당 없음",
+      "administrative_fine": {
+        "statute": "화평법 시행령 제24조 [별표 2] 다목",
+        "first_offense": 6000000,
+        "second_offense": 8000000,
+        "third_offense": 10000000,
+        "first_offense_str": "600만원",
+        "second_offense_str": "800만원",
+        "third_offense_str": "1,000만원"
+      },
+      "administrative_disposition": {
+        "statute": "화평법 제45조",
+        "first_offense": "1차: 시정명령",
+        "second_offense": "2차: 경고",
+        "third_offense": "3차: 대리권 불인정"
+      },
+      "mitigation_options": [
+        "국외제조자-OR 선임계약서 및 수입자 통보 공문 즉시 보완 제출 시 50% 감경"
+      ],
+      "practical_action_steps": [
+        "1. 국외제조사(Principal)와 국외대리인(OR) 간 선임계약서(POA) 갱신",
+        "2. 환경부(화학물질정보처리시스템)에 OR 선임신고서 접수",
+        "3. 국내 모든 수입자에게 OR 등록확인서(Confirmation Letter) 교부"
+      ]
+    },
+    {
+      "id": "KREACH-009",
+      "title": "화학물질 실적 서류 기록·보존(제43조) 위반",
+      "category": "기록보존 위반",
+      "statute_basis": "화평법 제43조, 제54조제2항제1호, 영 [별표 2] 라목",
+      "criminal_penalty": "해당 없음",
+      "administrative_fine": {
+        "statute": "화평법 시행령 제24조 [별표 2] 라목",
+        "first_offense": 1800000,
+        "second_offense": 2400000,
+        "third_offense": 3000000,
+        "first_offense_str": "180만원",
+        "second_offense_str": "240만원",
+        "third_offense_str": "300만원"
+      },
+      "administrative_disposition": {
+        "statute": "화평법 제45조",
+        "first_offense": "1차: 경고 및 개선명령 (5년 실적대장 소급 복구)",
+        "second_offense": "2차: 과태료 가중",
+        "third_offense": "3차: 영업정지 1개월"
+      },
+      "mitigation_options": [
+        "ERP 및 세금계산서/통관필증을 근거로 제조·수입·판매대장 즉시 소급 작성 시 50% 감경 (90만원)",
+        "자진납부 시 72만원까지 감액"
+      ],
+      "practical_action_steps": [
+        "1. 최근 5년간 수입신고필증 및 세금계산서 전수 취합",
+        "2. 화평법 시행규칙 [별지 제32호서식] 제조·수입·판매·사용 관리대장 작성",
+        "3. 전산 파일 및 출력본 사내 5년간 보존 편철"
+      ]
+    },
+    {
+      "id": "KREACH-010",
+      "title": "유해성심사 거짓 자료 제출 및 부정등록",
+      "category": "허위자료 제출",
+      "statute_basis": "화평법 제49조제2호",
+      "criminal_penalty": "5년 이하의 징역 또는 1억원 이하의 벌금",
+      "administrative_fine": null,
+      "administrative_disposition": {
+        "statute": "화평법 제19조",
+        "first_offense": "1차: 등록 취소 및 전량 회수·폐기명령",
+        "second_offense": "2차: 고발",
+        "third_offense": "3차: 시설 폐쇄"
+      },
+      "mitigation_options": [
+        "GLP 시험기관 오류인 경우 시험기관 귀책 증명 및 재시험성적서 제출"
+      ],
+      "practical_action_steps": [
+        "1. 공인 GLP 시험기관 성적서 원본 진위 확인",
+        "2. 국립환경과학원에 정정신청서 및 신규 GLP 성적서 즉시 재제출"
+      ]
+    }
+  ]
+}

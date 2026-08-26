@@ -1,0 +1,41 @@
+{
+  "title": "화평법(K-REACH) 화학물질/원료 형태별 면제 판정 마스터 매트릭스",
+  "version": "2025.1.1",
+  "exemption_categories": [
+    {
+      "category_id": "EX-COSMETIC-RAW",
+      "category_name": "화장품/세제/의약외품 원료 vs 완제품",
+      "rule": "화장품법/화학제품안전법/약사법 완제품은 화평법 적용 제외이나, 완제품 제조용으로 수입되는 원료 화학물질(계면활성제, 보습제, 방부제 등)은 1톤 이상 시 화평법 등록 의무 대상임."
+    },
+    {
+      "category_id": "EX-POLYMER",
+      "category_name": "고분자화합물(Polymer) 및 단량체(Monomer)",
+      "rule": "Mn 10,000 이상이고 저분자(1000 미만 1%, 500 미만 0.1%) 충족 시 KCMA 등록면제확인 대상. 신규 단량체 2wt% 미만 결합 시 신규 단량체 등록 면제."
+    },
+    {
+      "category_id": "EX-NATURAL",
+      "category_name": "비변형 천연 식물 추출물/동식물성 유지",
+      "rule": "화학적 변형 없이 압착/추출된 천연물질은 시행령 [별표 1]에 따라 등록 완전 면제. 단, 수소첨가(경화유) 등 화학적 변형 시 등록 대상."
+    },
+    {
+      "category_id": "EX-INTERMEDIATE",
+      "category_name": "반응 중간체 (비분리 vs 현장격리)",
+      "rule": "반응기 외부로 분리되지 않는 비분리 중간체(Non-isolated)는 등록 완전 면제. 현장격리 중간체는 간이 시험자료로 등록 가능."
+    },
+    {
+      "category_id": "EX-EXPORT",
+      "category_name": "전량 국외 수출용 및 시제품 R&D",
+      "rule": "국외 전량 수출용 또는 파일럿 시제품 R&D 물질은 KCMA에 사전 '등록면제확인' 신청 시 등록 면제 (유효기간 최대 2년)."
+    },
+    {
+      "category_id": "EX-TABLE1",
+      "category_name": "시행령 [별표 1] 지정 면제 물질",
+      "rule": "글리세린(CAS 56-81-5), 포도당, 수소, 산소, 물, 지방산(C12-18) 등은 수량과 무관하게 당연 면제."
+    },
+    {
+      "category_id": "EX-ARTICLE",
+      "category_name": "성형 완제품 (Article)",
+      "rule": "플라스틱 용기, 캡, 필름 등 특정 형태를 갖춘 완제품은 사용 중 화학물질이 의도적으로 방출되지 않는 한 화평법 등록 대상 제외."
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "env-compliance-agent",
+  "version": "1.0.0",
+  "description": "화학물질관리법 특화 환경규제 AI 에이전트 및 컴플라이언스 시스템",
+  "main": "server/api.js",
+  "scripts": {
+    "start": "node server/api.js",
+    "dev": "node server/api.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.4.2",
+    "express": "^4.19.2",
+    "openai": "^7.5.0"
+  }
+}

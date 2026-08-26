@@ -1,0 +1,393 @@
+{
+  "matrix_name": "화학물질관리법 및 환경부·안전원 고시 위반행위별 벌칙·과태료·행정처분 종합 매트릭스 (2025년 최신)",
+  "items": [
+    {
+      "id": "CCA-001",
+      "category": "수입 및 확인",
+      "title": "화학물질 확인명세서(확인결과서) 미제출(누락)",
+      "trigger_keywords": ["수입제품 확인명세서", "확인명세서 누락", "화학물질 확인", "제9조", "확인결과서", "수입 통관 누락", "1건 제출 누락", "성분확인 누락", "수입제품", "통관 누락", "loc"],
+      "statute_basis": "화학물질관리법 제9조 제1항, 환경부고시 제2024-2호",
+      "obligation_timing": "화학물질 제조 또는 수입 전 (관세청 수입신고/통관 전)",
+      "penalty_type": "과태료 + 행정처분",
+      "criminal_penalty": "형사처벌 대상 아님 (단, 금지/무허가 물질 포함 시 별도 벌칙 적용)",
+      "administrative_fine": {
+        "statute": "화학물질관리법 제64조 제1항 제1호, 시행령 [별표 2] 가목",
+        "first_offense": 6000000,
+        "first_offense_str": "600만원 (1차 위반)",
+        "second_offense": 8000000,
+        "second_offense_str": "800만원 (2차 위반)",
+        "third_offense": 10000000,
+        "third_offense_str": "1,000만원 (3차 이상 위반)"
+      },
+      "administrative_disposition": {
+        "statute": "시행규칙 [별표 7] 제1호",
+        "first_offense": "경고 및 시정명령",
+        "second_offense": "개선명령",
+        "third_offense": "영업정지(취급중지) 1개월"
+      },
+      "mitigation_options": [
+        "질서위반행위규제법 제18조에 따른 사전통지 기간 내 자진납부 시 20% 감경 (600만원 -> 480만원)",
+        "시행령 별표 2 일반기준 나목에 따라 최초 위반, 단순 과실, 자진신고 및 즉시 시정 시 최대 1/2(50%) 감경 가능 (최대 240만원까지 감액)"
+      ],
+      "practical_action_steps": [
+        "1. 해외 제조사 LOC 및 MSDS 확보",
+        "2. KCMA 화학물질확인시스템에 사후 확인명세서 등록",
+        "3. 관할 유역·지방환경청 화학안전관리단에 자진신고서 및 소명서 제출"
+      ]
+    },
+    {
+      "id": "CCA-014",
+      "category": "표시 의무",
+      "title": "유해화학물질에 관한 표시(MSDS 경고표지 등) 미부착 또는 훼손 방치",
+      "trigger_keywords": ["경고표지", "msds 경고표지", "표시 훼손", "경고표지 훼손", "표시 미부착", "용기 표시", "제16조", "그림문자 훼손"],
+      "statute_basis": "화학물질관리법 제16조 (유해화학물질에 관한 표시), 동법 시행규칙 제12조 [별표 2]",
+      "obligation_timing": "유해화학물질 보관·저장 용기 및 취급시설 출입구에 상시 명확히 부착",
+      "penalty_type": "벌칙(형사처벌) + 행정처분",
+      "criminal_penalty": "1년 이하의 징역 또는 3천만원 이하의 벌금 (화학물질관리법 제60조 제2호)",
+      "administrative_fine": {
+        "statute": "형사벌칙 및 행정처분 우선 적용",
+        "first_offense": 0,
+        "first_offense_str": "형사벌칙(1년/3천만) 대상",
+        "second_offense": 0,
+        "second_offense_str": "형사벌칙(1년/3천만) 대상",
+        "third_offense": 0,
+        "third_offense_str": "형사벌칙(1년/3천만) 대상"
+      },
+      "administrative_disposition": {
+        "statute": "시행규칙 제61조 [별표 7] 개별기준",
+        "first_offense": "경고 및 개선명령 (경고표지 즉시 재부착)",
+        "second_offense": "영업정지(취급중지) 5일 ~ 1개월",
+        "third_offense": "영업정지 3개월"
+      },
+      "mitigation_options": [
+        "훼손된 표지를 방수·내화학 라벨로 즉시 출력·교체 부착 후 사진 증빙 제출 시 개선명령 종결"
+      ],
+      "practical_action_steps": [
+        "1. KOSHA/안전원 MSDS 시스템에서 표준 GHS 경고표지 출력",
+        "2. 용기 및 시설 외부에 부착 후 날짜 기록"
+      ]
+    },
+    {
+      "id": "CCA-015",
+      "category": "화학사고 대응",
+      "title": "화학사고 발생 시 즉시 신고(15분 골든타임) 의무 위반",
+      "trigger_keywords": ["화학사고 발생", "15분 이내", "즉시 신고", "사고 미신고", "화학사고 신고", "15분", "골든타임", "제43조", "화학사고 났는데"],
+      "statute_basis": "화학물질관리법 제43조 제2항, 동법 시행규칙 제49조",
+      "obligation_timing": "화학사고 발생 또는 우려 시 15분 이내 관할 소방서, 경찰서, 환경청에 즉시 신고",
+      "penalty_type": "벌칙(중형사처벌) + 강력 행정처분",
+      "criminal_penalty": "2년 이하의 징역 또는 1억원 이하의 벌금 (화학물질관리법 제58조 제1호 - 사고 미신고 또는 거짓 신고)",
+      "administrative_fine": {
+        "statute": "중대 위반으로 형사처벌 및 영업정지 직접 적용",
+        "first_offense": 0,
+        "first_offense_str": "형사벌칙(2년/1억) 및 영업정지",
+        "second_offense": 0,
+        "second_offense_str": "형사벌칙(2년/1억) 및 영업정지",
+        "third_offense": 0,
+        "third_offense_str": "형사벌칙(2년/1억) 및 영업정지"
+      },
+      "administrative_disposition": {
+        "statute": "시행규칙 제61조 [별표 7] 개별기준 제13호",
+        "first_offense": "영업정지(취급중지) 1개월",
+        "second_offense": "영업정지 3개월",
+        "third_offense": "영업허가 취소"
+      },
+      "mitigation_options": [
+        "사고 즉시 방재조치 이행 및 인명피해 최소화 입증 시 정상을 참작하여 행정처분 감경 가능"
+      ],
+      "practical_action_steps": [
+        "1. 119 소방서 및 128 환경오염신고센터에 15분 이내 유선 즉시 신고",
+        "2. 사고 발생 일시, 장소, 화학물질명, 누출량, 응급조치 내용 서면 제출"
+      ]
+    },
+    {
+      "id": "CCA-016",
+      "category": "개인보호장구",
+      "title": "유해화학물질 취급자 개인보호장구 미지급 및 미착용",
+      "trigger_keywords": ["개인보호장구", "보호장구 안 줬을 때", "방독마스크", "화학보호복", "보호복", "보호장갑", "보호안경", "제14조", "개인보호장구 미지급"],
+      "statute_basis": "화학물질관리법 제14조, 화학물질안전원고시 제2023-5호",
+      "obligation_timing": "유해화학물질 취급 작업 전 전용 보호구(마스크, 장갑, 보호복, 안경) 지급 및 상시 착용",
+      "penalty_type": "벌칙(형사처벌) + 행정처분",
+      "criminal_penalty": "3년 이하의 징역 또는 5천만원 이하의 벌금 (화학물질관리법 제59조 제7호)",
+      "administrative_fine": {
+        "statute": "형사벌칙 및 행정처분 적용",
+        "first_offense": 0,
+        "first_offense_str": "형사벌칙(3년/5천만) 대상",
+        "second_offense": 0,
+        "second_offense_str": "형사벌칙(3년/5천만) 대상",
+        "third_offense": 0,
+        "third_offense_str": "형사벌칙(3년/5천만) 대상"
+      },
+      "administrative_disposition": {
+        "statute": "시행규칙 제61조 [별표 7] 개별기준",
+        "first_offense": "경고 및 개선명령 (보호구 즉시 지급 및 착용 교육)",
+        "second_offense": "영업정지(취급중지) 5일 ~ 1개월",
+        "third_offense": "영업정지 3개월"
+      },
+      "mitigation_options": [
+        "KCS 인증 보호구 지급대장 및 근로자 서명 날인부 구비 시 개선명령 종결"
+      ],
+      "practical_action_steps": [
+        "1. 취급 물질별 적합 보호구(유기가스용 마스크, 3·4형식 보호복) 비치",
+        "2. 개인보호장구 지급 및 착용대장 작성"
+      ]
+    },
+    {
+      "id": "CCA-017",
+      "category": "주민고지",
+      "title": "화학사고예방관리계획서 적합 판정 후 주민고지 미이행",
+      "trigger_keywords": ["주민고지", "화학사고예방관리계획서 주민고지", "주민고지 안 했을 때", "제23조의2", "지역주민 고지"],
+      "statute_basis": "화학물질관리법 제23조의2, 동법 시행규칙 제19조의3",
+      "obligation_timing": "화학사고예방관리계획서 적합 통보일로부터 3개월 이내 인근 주민 고지 및 매년 1회 최신화",
+      "penalty_type": "행정처분 + 과태료",
+      "criminal_penalty": "개선명령 불이행 시 형사고발",
+      "administrative_fine": {
+        "statute": "화학물질관리법 제64조, 시행규칙 [별표 7]",
+        "first_offense": 3000000,
+        "first_offense_str": "300만원 (1차 위반)",
+        "second_offense": 6000000,
+        "second_offense_str": "600만원 (2차 위반)",
+        "third_offense": 10000000,
+        "third_offense_str": "1,000만원 (3차 이상 위반)"
+      },
+      "administrative_disposition": {
+        "statute": "시행규칙 제61조 [별표 7] 개별기준",
+        "first_offense": "경고 및 개선명령 (주민고지 즉시 실시)",
+        "second_offense": "영업정지 5일 ~ 1개월",
+        "third_offense": "영업정지 3개월"
+      },
+      "mitigation_options": [
+        "회사 홈페이지 공고, 서면 우편 발송, 지자체 게시판 공고 즉시 시행 증빙 제출"
+      ],
+      "practical_action_steps": [
+        "1. 화학물질안전원 표준 주민고지서 양식 작성",
+        "2. 사업장 반경 내 주민에게 서면 발송 또는 홈페이지 게시 후 지자체 보고"
+      ]
+    },
+    {
+      "id": "CCA-018",
+      "category": "국내대리인",
+      "title": "국외제조자가 선임한 국내대리인(OR)의 수입자 통보의무 위반",
+      "trigger_keywords": ["국내대리인", "국외제조자", "선임된 국내대리인", "or", "통보 안 했을 때", "제48조의4"],
+      "statute_basis": "화학물질관리법 제48조의4 제3항",
+      "obligation_timing": "선임된 사실 및 위임 업무 범위를 국내 수입자에게 사전 서면 통보",
+      "penalty_type": "과태료 부과",
+      "criminal_penalty": "형사처벌 대상 아님",
+      "administrative_fine": {
+        "statute": "화학물질관리법 제64조 제1항 제10호의3, 동법 시행령 [별표 2]",
+        "first_offense": 6000000,
+        "first_offense_str": "600만원 (1차 위반)",
+        "second_offense": 8000000,
+        "second_offense_str": "800만원 (2차 위반)",
+        "third_offense": 10000000,
+        "third_offense_str": "1,000만원 (3차 이상 위반)"
+      },
+      "administrative_disposition": {
+        "statute": "시행규칙 [별표 7]",
+        "first_offense": "시정명령",
+        "second_offense": "개선명령",
+        "third_offense": "대리인 자격 취소 건의"
+      },
+      "mitigation_options": [
+        "수입자에게 즉시 선임확인서 서면 교부 및 KCMA 시스템 등록 시 50% 감경"
+      ],
+      "practical_action_steps": [
+        "1. 국외제조사 선임계약서 사본 수입자 교부",
+        "2. 통보 확인증 보관"
+      ]
+    },
+    {
+      "id": "CCA-007",
+      "category": "관리자 선임",
+      "title": "유해화학물질관리자 선임·해임·퇴직 미신고 또는 직무대리자 미지정",
+      "trigger_keywords": ["관리자 선임", "관리자선임", "관리자 미선임", "선임 미신고", "관리자 신고", "해임신고", "퇴직신고", "직무대리자", "선임하고 신고", "관리자 선임하고"],
+      "statute_basis": "화학물질관리법 제32조, 동법 시행규칙 제35조",
+      "obligation_timing": "관리자 선임·해임·퇴직 후 30일 이내 관할 환경청 신고",
+      "penalty_type": "과태료 + 행정처분",
+      "criminal_penalty": "형사처벌 대상 아님",
+      "administrative_fine": {
+        "statute": "화학물질관리법 제64조 제1항 제7호, 동법 시행령 [별표 2] 자목",
+        "first_offense": 1200000,
+        "first_offense_str": "120만원 (1차 위반)",
+        "second_offense": 2400000,
+        "second_offense_str": "240만원 (2차 위반)",
+        "third_offense": 3000000,
+        "third_offense_str": "300만원 (3차 이상 위반)"
+      },
+      "administrative_disposition": {
+        "statute": "시행규칙 [별표 7] 개별기준",
+        "first_offense": "경고 및 시정명령",
+        "second_offense": "개선명령",
+        "third_offense": "영업정지 1개월"
+      },
+      "mitigation_options": [
+        "선임 후 30일 경과 즉시 자진신고서 제출 시 과태료 50% 감경(120만원 -> 60만원) 및 사전납부 20% 추가 감경(48만원)"
+      ],
+      "practical_action_steps": [
+        "1. 유해화학물질 관리자 선임(해임) 신고서 작성",
+        "2. 자격증(기사) 사본 또는 양성교육 수료증 첨부하여 관할 환경청 화학안전관리단에 제출"
+      ]
+    },
+    {
+      "id": "CCA-008",
+      "category": "도급 관리",
+      "title": "유해화학물질 취급 도급신고 미이행",
+      "trigger_keywords": ["도급신고", "도급주고", "도급", "도급계약", "도급신고 미이행", "도급 미신고", "제31조"],
+      "statute_basis": "화학물질관리법 제31조 제1항",
+      "obligation_timing": "도급계약 체결일로부터 10일 이내(또는 작업 시작 전) 관할 환경청 신고",
+      "penalty_type": "과태료 + 행정처분",
+      "criminal_penalty": "형사처벌 대상 아님 (단, 무자격 수급인에게 도급 시 별도 벌칙)",
+      "administrative_fine": {
+        "statute": "화학물질관리법 제64조 제1항 제6호, 동법 시행령 [별표 2] 아목",
+        "first_offense": 3000000,
+        "first_offense_str": "300만원 (1차 위반)",
+        "second_offense": 6000000,
+        "second_offense_str": "600만원 (2차 위반)",
+        "third_offense": 10000000,
+        "third_offense_str": "1,000만원 (3차 이상 위반)"
+      },
+      "administrative_disposition": {
+        "statute": "시행규칙 [별표 7] 개별기준",
+        "first_offense": "경고 및 시정명령",
+        "second_offense": "개선명령",
+        "third_offense": "영업정지 1개월"
+      },
+      "mitigation_options": [
+        "도급계약서 및 수급인 안전관리계획서를 구비하여 즉시 사후 도급신고 제출 시 과태료 50% 감경(300만원 -> 150만원)"
+      ],
+      "practical_action_steps": [
+        "1. 수급인의 화관법 기준 충족 여부 확인",
+        "2. 도급신고서 및 안전관리계획서 관할 환경청 제출"
+      ]
+    },
+    {
+      "id": "CCA-009",
+      "category": "안전교육",
+      "title": "유해화학물질 종사자 및 관리자 안전교육 미실시 (미이수)",
+      "trigger_keywords": ["안전교육", "종사자 교육", "관리자 교육", "취급자 교육", "교육 미이수", "안전교육 안", "교육 안 시키면", "화학안전교육", "32시간", "8시간", "2시간"],
+      "statute_basis": "화학물질관리법 제33조제2항·제3항(종전) / 법 제64조제2항제4호, 안전원고시 제2024-5호",
+      "obligation_timing": "관리자 2년 32시간, 취급담당자 매년 8시간, 일반종사자 매년 2시간",
+      "penalty_type": "과태료 + 행정처분",
+      "criminal_penalty": "형사처벌 대상 아님",
+      "administrative_fine": {
+        "statute": "화학물질관리법 제64조 제2항 제4호, 동법 시행령 [별표 2] 하목 5호",
+        "first_offense": 1000000,
+        "first_offense_str": "100만원 (1차 위반)",
+        "second_offense": 2000000,
+        "second_offense_str": "200만원 (2차 위반)",
+        "third_offense": 3000000,
+        "third_offense_str": "300만원 (3차 이상 위반)"
+      },
+      "administrative_disposition": {
+        "statute": "시행규칙 [별표 7] 개별기준",
+        "first_offense": "경고 및 시정명령",
+        "second_offense": "개선명령",
+        "third_offense": "취급담당자 업무정지"
+      },
+      "mitigation_options": [
+        "화학물질안전원 사이버교육센터를 통해 온라인 즉시 단체 수강 후 이수증 제출 시 과태료 50% 감경(100만원 -> 50만원) 및 사전납부 20% 추가 감경(40만원)"
+      ],
+      "practical_action_steps": [
+        "1. 화학물질안전원 교육시스템(edunics.me.go.kr) 온라인 교육 즉시 신청",
+        "2. 사업장 자체 안전교육 대장 5년간 보관"
+      ]
+    },
+    {
+      "id": "CCA-013",
+      "category": "대장 관리 및 기록보존",
+      "title": "사고대비물질 관리대장 및 실적 서류 기록·보존 의무 위반 (누락)",
+      "trigger_keywords": ["사고대비물질 관리대장", "관리대장 누락", "관리대장 미작성", "점검대장 누락", "대장 누락", "한달정도 작성 누락", "자체점검대장", "점검대장 미작성", "제50조", "제64조제2항제5호", "관리대장"],
+      "statute_basis": "화학물질관리법 제50조제1항, 제64조제2항제5호, 동법 시행령 [별표 2] 하목 6호",
+      "obligation_timing": "유해화학물질 및 사고대비물질 입출고/사용/보관 관리대장 상시 기록 및 5년간 보존",
+      "penalty_type": "과태료 + 행정처분",
+      "criminal_penalty": "단순 착오 누락은 과태료 및 개선명령 대상 (고의적 은폐 시 3년/5천만)",
+      "administrative_fine": {
+        "statute": "화학물질관리법 제64조 제2항 제5호 (300만원 이하의 과태료), 동법 시행령 [별표 2] 하목 6호",
+        "first_offense": 1800000,
+        "first_offense_str": "180만원 (1차 위반)",
+        "second_offense": 2400000,
+        "second_offense_str": "240만원 (2차 위반)",
+        "third_offense": 3000000,
+        "third_offense_str": "300만원 (3차 이상 위반)"
+      },
+      "administrative_disposition": {
+        "statute": "시행규칙 제61조 [별표 7] 개별기준",
+        "first_offense": "경고 및 개선명령 (누락 대장 즉시 소급 작성 및 비치)",
+        "second_offense": "영업정지(취급중지) 5일 ~ 1개월",
+        "third_offense": "영업정지(취급중지) 3개월"
+      },
+      "mitigation_options": [
+        "1. ERP, 거래명세표, 원료수불부를 바탕으로 누락 기간 대장 즉시 소급 복원 작성",
+        "2. 최초 위반 소명 시 과태료 50% 감경(180만원 -> 90만원) 및 사전납부 20% 추가 감경(72만원)"
+      ],
+      "practical_action_steps": [
+        "1. 누락 기간 관리대장 소급 작성 및 관리책임자 서명",
+        "2. 관할 환경청 점검 시 소명서 제출"
+      ]
+    },
+    {
+      "id": "CCA-012",
+      "category": "사고대비물질 안전관리",
+      "title": "사고대비물질 보관·저장시설 잠금장치(시건장치) 미설치 및 관리 소홀",
+      "trigger_keywords": ["잠금장치", "시건장치", "사고대비물질 보관장소", "사고대비물질 보관", "잠금장치 안했을때", "잠금장치 미설치", "보관장소 잠금장치", "제40조", "시건"],
+      "statute_basis": "화학물질관리법 제40조제1항, 시행규칙 제44조 [별표 8] 제2호",
+      "obligation_timing": "사고대비물질 보관·저장시설 상시 잠금 및 열쇠관리 대장 기록 유지",
+      "penalty_type": "벌칙(형사처벌) + 행정처분",
+      "criminal_penalty": "3년 이하의 징역 또는 5천만원 이하의 벌금 (화학물질관리법 제59조 제11호 - 제40조제1항 위반)",
+      "administrative_fine": {
+        "statute": "해당 없음 (형사벌칙 및 행정처분 우선 적용 사안)",
+        "first_offense": 0,
+        "first_offense_str": "형사벌칙(3년/5천만) 적용 대상",
+        "second_offense": 0,
+        "second_offense_str": "형사벌칙(3년/5천만) 적용 대상",
+        "third_offense": 0,
+        "third_offense_str": "형사벌칙(3년/5천만) 적용 대상"
+      },
+      "administrative_disposition": {
+        "statute": "시행규칙 제61조 [별표 7] 개별기준",
+        "first_offense": "경고 및 개선명령 (잠금장치 즉시 보완 및 열쇠관리대장 비치)",
+        "second_offense": "영업정지(취급중지) 5일 ~ 1개월",
+        "third_offense": "영업정지(취급중지) 3개월"
+      },
+      "mitigation_options": [
+        "점검 당일 즉시 잠금장치 설치 사진, 열쇠관리대장 증빙 제출 시 고발 유예 및 시정명령 종결"
+      ],
+      "practical_action_steps": [
+        "1. 사고대비물질 보관함에 이중 시건장치 즉시 체결",
+        "2. 열쇠관리대장 작성 및 비치"
+      ]
+    },
+    {
+      "id": "CCA-006",
+      "category": "취급시설 검사",
+      "title": "유해화학물질 취급시설 설치검사 및 정기검사 기준 (2025년 1~4년 차등화)",
+      "trigger_keywords": ["정기검사", "설치검사", "수시검사", "안전진단", "취급시설 검사", "검사주기", "검사기준", "검사기관", "한국환경공단", "가스안전공사", "안전보건공단", "제33조", "차등관리", "저장탱크", "정기검사 안받고"],
+      "statute_basis": "화학물질관리법 제33조, 시행규칙 제33조 (2025 개정 차등화)",
+      "obligation_timing": "설치 시 가동 전 설치검사 / 정기검사는 위험도·취급량에 따라 1~4년 주기 수검",
+      "penalty_type": "벌칙(형사처벌) + 과태료 + 행정처분",
+      "criminal_penalty": "3년 이하의 징역 또는 5천만원 이하의 벌금 (법 제59조 제8호 - 정기검사 미수검 운전)",
+      "administrative_fine": {
+        "statute": "법 제64조제1항제5호, 영 [별표 2] 바목",
+        "first_offense": 6000000,
+        "first_offense_str": "600만원 (1차 위반)",
+        "second_offense": 8000000,
+        "second_offense_str": "800만원 (2차 위반)",
+        "third_offense": 10000000,
+        "third_offense_str": "1,000만원 (3차 이상 위반)"
+      },
+      "administrative_disposition": {
+        "statute": "시행규칙 [별표 7]",
+        "first_offense": "개선명령 (수검명령)",
+        "second_offense": "취급시설 사용중지명령",
+        "third_offense": "영업정지 1개월"
+      },
+      "mitigation_options": [
+        "2025년 개정 차등관리제에 따라 중소량(영업신고) 시설은 2년 주기, 소량시설은 3~4년 및 간이검사 적용"
+      ],
+      "practical_action_steps": [
+        "1. 사업장 취급시설 등급 확인 (대량 1년, 중소량 2년, 소량 3~4년)",
+        "2. 공인 검사기관(환경공단/가스안전공사/안전보건공단) 만료 30일 전 신청",
+        "3. 방류벽 110%, 배관 비파괴검사 20%, 누출감지기, 도보 10초 이내 비상세안설비 점검"
+      ]
+    }
+  ]
+}
