@@ -1008,4 +1008,128 @@ document.addEventListener('DOMContentLoaded', () => {
   loadViolationsList();
   loadStatutesData();
   loadChecklistData();
+
+  // ========================================================
+  // 📊 Admin Access & IP Logs Module
+  // ========================================================
+  const btnOpenLogsModal = document.getElementById('btn-open-logs-modal');
+  const logsModal = document.getElementById('logs-modal');
+  const btnCloseLogsModal = document.getElementById('btn-close-logs-modal');
+  const logsTableBody = document.getElementById('logs-table-body');
+  const statTotalQueries = document.getElementById('stat-total-queries');
+  const statUniqueIps = document.getElementById('stat-unique-ips');
+  const statTotalTokens = document.getElementById('stat-total-tokens');
+  const logsSearchInput = document.getElementById('logs-search-input');
+  const btnRefreshLogs = document.getElementById('btn-refresh-logs');
+  const btnExportLogsCsv = document.getElementById('btn-export-logs-csv');
+  const btnClearLogs = document.getElementById('btn-clear-logs');
+
+  let rawLogsData = [];
+
+  function escapeLogHtml(str) {
+    if (!str) return '';
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  async function fetchAndRenderLogs() {
+    if (!logsTableBody) return;
+    try {
+      logsTableBody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--text-muted); padding:30px;">로그 불러오는 중...</td></tr>';
+      const res = await fetch('/api/admin/logs');
+      const data = await res.json();
+      rawLogsData = data.logs || [];
+      
+      if (statTotalQueries) statTotalQueries.textContent = `${data.total_count || 0}건`;
+      if (statUniqueIps) statUniqueIps.textContent = `${data.unique_ips || 0}개`;
+      if (statTotalTokens) statTotalTokens.textContent = `${(data.total_tokens || 0).toLocaleString()} tkn`;
+      
+      renderLogsTable(rawLogsData);
+    } catch (err) {
+      logsTableBody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#ef4444; padding:30px;">로그 로드 실패: ${err.message}</td></tr>`;
+    }
+  }
+
+  function renderLogsTable(logs) {
+    if (!logsTableBody) return;
+    const filter = (logsSearchInput && logsSearchInput.value ? logsSearchInput.value : '').toLowerCase().trim();
+    const filtered = logs.filter(l => {
+      if (!filter) return true;
+      return (l.ip && l.ip.toLowerCase().includes(filter)) ||
+             (l.query && l.query.toLowerCase().includes(filter)) ||
+             (l.law && l.law.toLowerCase().includes(filter)) ||
+             (l.engine && l.engine.toLowerCase().includes(filter));
+    });
+
+    if (filtered.length === 0) {
+      logsTableBody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--text-muted); padding:30px;">기록된 접속 및 질문 내역이 없습니다.</td></tr>';
+      return;
+    }
+
+    logsTableBody.innerHTML = filtered.map(item => `
+      <tr>
+        <td style="font-size:0.75rem; color:var(--text-muted); white-space:nowrap;">${item.kst_time || item.timestamp || '-'}</td>
+        <td><span class="ip-badge">${escapeLogHtml(item.ip || 'Unknown')}</span></td>
+        <td><span class="law-tag-mini ${item.law === '화평법' ? 'kreach' : 'cca'}">${item.law || '화관법'}</span></td>
+        <td style="max-width:320px; word-break:break-all; font-weight:500;">${escapeLogHtml(item.query || '')}</td>
+        <td style="font-size:0.75rem; color:#a5b4fc; white-space:nowrap;">${escapeLogHtml(item.engine || '로컬엔진')}</td>
+        <td style="font-size:0.75rem; color:#fbbf24; white-space:nowrap; font-weight:700;">${item.cost_krw || '0원'}</td>
+      </tr>
+    `).join('');
+  }
+
+  if (btnOpenLogsModal && logsModal) {
+    btnOpenLogsModal.addEventListener('click', () => {
+      logsModal.classList.add('active');
+      fetchAndRenderLogs();
+    });
+  }
+
+  if (btnCloseLogsModal && logsModal) {
+    btnCloseLogsModal.addEventListener('click', () => {
+      logsModal.classList.remove('active');
+    });
+  }
+
+  if (logsModal) {
+    logsModal.addEventListener('click', (e) => {
+      if (e.target === logsModal) logsModal.classList.remove('active');
+    });
+  }
+
+  if (logsSearchInput) {
+    logsSearchInput.addEventListener('input', () => renderLogsTable(rawLogsData));
+  }
+
+  if (btnRefreshLogs) {
+    btnRefreshLogs.addEventListener('click', fetchAndRenderLogs);
+  }
+
+  if (btnClearLogs) {
+    btnClearLogs.addEventListener('click', async () => {
+      if (confirm('저장된 모든 접속 로그를 삭제하시겠습니까?')) {
+        await fetch('/api/admin/logs', { method: 'DELETE' });
+        fetchAndRenderLogs();
+      }
+    });
+  }
+
+  if (btnExportLogsCsv) {
+    btnExportLogsCsv.addEventListener('click', () => {
+      if (!rawLogsData.length) {
+        alert('내보낼 로그 데이터가 없습니다.');
+        return;
+      }
+      let csv = '\uFEFF일시(KST),접속자IP,적용법령,질문내용,사용엔진,소모토큰,소모비용\n';
+      rawLogsData.forEach(l => {
+        const q = (l.query || '').replace(/"/g, '""');
+        csv += `"${l.kst_time || ''}","${l.ip || ''}","${l.law || ''}","${q}","${l.engine || ''}","${l.tokens || 0}","${l.cost_krw || ''}"\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `환경법규_에이전트_접속로그_${new Date().toISOString().slice(0,10)}.csv`;
+      a.click();
+    });
+  }
 });

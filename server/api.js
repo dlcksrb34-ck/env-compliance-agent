@@ -2,19 +2,49 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const fs = require('fs');
 const legalEngine = require('./legal_engine');
 const llmEngine = require('./llm_engine');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.set('trust proxy', true);
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../public')));
 
 const smartRouter = require('./smart_router');
 
-// Consultation endpoint (Supports Smart Caching + Selective LLM + Local Engine)
+// Helper: Get real client IP
+function getClientIp(req) {
+  const forwarded = req.headers['x-forwarded-for'];
+  if (forwarded) {
+    return forwarded.split(',')[0].trim();
+  }
+  return req.ip || (req.connection && req.connection.remoteAddress) || '127.0.0.1';
+}
+
+// In-Memory + Persistent Access Logging
+const LOG_FILE = path.join(__dirname, '../data/access_logs.json');
+let accessLogs = [];
+try {
+  if (fs.existsSync(LOG_FILE)) {
+    accessLogs = JSON.parse(fs.readFileSync(LOG_FILE, 'utf8'));
+  }
+} catch (e) {
+  accessLogs = [];
+}
+
+function recordLog(entry) {
+  accessLogs.unshift(entry);
+  if (accessLogs.length > 500) accessLogs = accessLogs.slice(0, 500);
+  try {
+    fs.writeFileSync(LOG_FILE, JSON.stringify(accessLogs.slice(0, 200), null, 2));
+  } catch (e) {}
+}
+
+// Consultation endpoint (Supports Smart Caching + Selective LLM + Local Engine + IP Logging)
 app.post('/api/consult', async (req, res) => {
   try {
     const { query, apiKey, model, forceFresh, law } = req.body;
@@ -22,20 +52,24 @@ app.post('/api/consult', async (req, res) => {
       return res.status(400).json({ error: '질문 내용을 입력해 주세요.' });
     }
 
+    const clientIp = getClientIp(req);
+    const kstTime = new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
     const effectiveApiKey = apiKey || process.env.OPENAI_API_KEY;
     const selectedModel = model || 'gpt-5.5';
     const effectiveLaw = law || 'cca';
+
+    let result;
 
     // 1. Check In-Memory Cache (Token cost: 0)
     if (!forceFresh) {
       const cached = smartRouter.getCachedResponse(`${effectiveLaw}_${query}`, selectedModel);
       if (cached) {
-        return res.json(cached);
+        result = cached;
       }
     }
 
     // 2. If API Key provided, call LLM with pruned RAG grounding
-    if (effectiveApiKey && effectiveApiKey.trim()) {
+    if (!result && effectiveApiKey && effectiveApiKey.trim()) {
       try {
         const llmResult = await llmEngine.consultWithLLM({
           query,
@@ -43,22 +77,46 @@ app.post('/api/consult', async (req, res) => {
           model: selectedModel,
           law: effectiveLaw
         });
-        
-        // Cache result
         smartRouter.setCachedResponse(`${effectiveLaw}_${query}`, selectedModel, llmResult);
-        return res.json(llmResult);
+        result = llmResult;
       } catch (llmErr) {
-        console.warn('LLM consultation error, falling back to local engine:', llmErr.message);
+        console.warn(`[LLM 오류] IP: ${clientIp} | fallback:`, llmErr.message);
         const fallback = effectiveLaw === 'kreach' ? legalEngine.consultKReachLegalAgent(query) : legalEngine.consultLegalAgent(query);
         fallback.llm_error = llmErr.message;
-        return res.json(fallback);
+        result = fallback;
       }
     }
 
     // 3. Default Local Hybrid Engine (Token cost: 0)
-    smartRouter.recordLocalHit();
-    const result = effectiveLaw === 'kreach' ? legalEngine.consultKReachLegalAgent(query) : legalEngine.consultLegalAgent(query);
-    res.json(result);
+    if (!result) {
+      smartRouter.recordLocalHit();
+      result = effectiveLaw === 'kreach' ? legalEngine.consultKReachLegalAgent(query) : legalEngine.consultLegalAgent(query);
+    }
+
+    // Record Access Log
+    const engineName = result.engine || (effectiveApiKey ? selectedModel : '로컬 룰 엔진');
+    const costKrw = result.tokens && result.tokens.cost_krw ? result.tokens.cost_krw : '0원';
+    const totalTokens = result.tokens && result.tokens.total_tokens ? result.tokens.total_tokens : 0;
+
+    const logEntry = {
+      id: Date.now().toString(36) + Math.random().toString(36).substr(2, 4),
+      timestamp: new Date().toISOString(),
+      kst_time: kstTime,
+      ip: clientIp,
+      userAgent: req.headers['user-agent'] || '',
+      type: '질문 상담',
+      law: effectiveLaw === 'kreach' ? '화평법' : '화관법',
+      query: query.trim(),
+      engine: engineName,
+      tokens: totalTokens,
+      cost_krw: costKrw
+    };
+    recordLog(logEntry);
+
+    // Terminal console log
+    console.log(`[접속로그] 🕒 ${kstTime} | 🌐 IP: ${clientIp} | ⚖️ ${logEntry.law} | 💬 "${query.trim().replace(/\r?\n/g, ' ')}" | 🧠 ${engineName} | 💰 ${costKrw}`);
+
+    return res.json(result);
   } catch (err) {
     console.error('Consultation error:', err);
     res.status(500).json({ error: '법률 분석 중 오류가 발생했습니다: ' + err.message });
@@ -68,6 +126,28 @@ app.post('/api/consult', async (req, res) => {
 // Optimization stats endpoint
 app.get('/api/optimization-stats', (req, res) => {
   res.json(smartRouter.getOptimizationStats());
+});
+
+// Admin logs endpoint
+app.get('/api/admin/logs', (req, res) => {
+  const uniqueIps = new Set(accessLogs.map(l => l.ip)).size;
+  const totalTokens = accessLogs.reduce((acc, l) => acc + (Number(l.tokens) || 0), 0);
+  res.json({
+    total_count: accessLogs.length,
+    unique_ips: uniqueIps,
+    total_tokens: totalTokens,
+    logs: accessLogs
+  });
+});
+
+// Admin clear logs endpoint
+app.delete('/api/admin/logs', (req, res) => {
+  accessLogs = [];
+  try {
+    fs.writeFileSync(LOG_FILE, JSON.stringify([], null, 2));
+  } catch (e) {}
+  console.log('[관리자] 접속 로그가 초기화되었습니다.');
+  res.json({ success: true, message: '로그가 성공적으로 초기화되었습니다.' });
 });
 
 // Test API Key endpoint
@@ -93,6 +173,8 @@ app.post('/api/calculate-penalty', (req, res) => {
     if (!violationId) {
       return res.status(400).json({ error: '위반 항목을 선택해 주세요.' });
     }
+    const clientIp = getClientIp(req);
+    const kstTime = new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
     const result = legalEngine.calculatePenalty(
       violationId,
       Number(offenseLevel) || 1,
@@ -100,6 +182,23 @@ app.post('/api/calculate-penalty', (req, res) => {
       Boolean(isFirstTime),
       Boolean(isEarlyPayment)
     );
+
+    const logEntry = {
+      id: Date.now().toString(36) + Math.random().toString(36).substr(2, 4),
+      timestamp: new Date().toISOString(),
+      kst_time: kstTime,
+      ip: clientIp,
+      userAgent: req.headers['user-agent'] || '',
+      type: '과태료 계산',
+      law: '화관법',
+      query: `과태료 시뮬레이션: ${result.statute ? result.statute.title : violationId} (${offenseLevel}차)`,
+      engine: '시뮬레이터',
+      tokens: 0,
+      cost_krw: '0원'
+    };
+    recordLog(logEntry);
+    console.log(`[접속로그] 🕒 ${kstTime} | 🌐 IP: ${clientIp} | 🧮 과태료 시뮬레이션: ${violationId} (${offenseLevel}차)`);
+
     res.json(result);
   } catch (err) {
     console.error('Penalty calculation error:', err);
@@ -170,7 +269,6 @@ app.get('/api/kreach/checklist', (req, res) => {
 // 6 Core Environmental Laws Registry
 app.get('/api/laws', (req, res) => {
   try {
-    const fs = require('fs');
     const lawsData = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/laws_registry.json'), 'utf8'));
     res.json(lawsData.laws);
   } catch (err) {
@@ -187,6 +285,7 @@ app.listen(PORT, () => {
   console.log(`====================================================`);
   console.log(`🌿 환경규제 AI 에이전트 (화학물질관리법 특화)`);
   console.log(`🤖 OpenAI LLM + 로컬 법률 RAG 지원 서버 구동`);
+  console.log(`📊 IP별 접속 및 질문 실시간 로깅 시스템 가동 중`);
   console.log(`🚀 서버 주소: http://localhost:${PORT}`);
   console.log(`====================================================`);
 });
