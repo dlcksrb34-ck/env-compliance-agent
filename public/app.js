@@ -819,25 +819,56 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    // Notices
+    // Notices (12 Comprehensive Administrative Notices)
     if (currentFilter === 'all' || currentFilter === 'notices') {
-      allStatutesData.notices.key_clauses.forEach(art => {
-        const fullText = `${art.article_no} ${art.title} ${art.content}`.toLowerCase();
-        if (!query || fullText.includes(query)) {
-          cardsHtml += `
-            <div class="statute-card">
-              <div class="statute-card-header">
-                <div class="statute-title-box">
-                  <span class="article-badge" style="background: #f59e0b;">${art.article_no}</span>
-                  <span class="statute-name">${art.title}</span>
+      const compList = (allStatutesData.comprehensive_notices && allStatutesData.comprehensive_notices.notices) ? allStatutesData.comprehensive_notices.notices : [];
+      if (compList.length > 0) {
+        compList.forEach(notice => {
+          notice.key_provisions.forEach(prov => {
+            const fullText = `${notice.name} ${notice.notice_number} ${notice.issuing_agency} ${prov.clause} ${prov.content}`.toLowerCase();
+            if (!query || fullText.includes(query)) {
+              const isMOE = notice.issuing_agency === '환경부';
+              const badgeColor = isMOE ? '#10b981' : '#f59e0b';
+              const badgeBg = isMOE ? 'rgba(16, 185, 129, 0.15)' : 'rgba(245, 158, 11, 0.15)';
+              cardsHtml += `
+                <div class="statute-card" style="border-left: 3px solid ${badgeColor};">
+                  <div class="statute-card-header">
+                    <div class="statute-title-box">
+                      <span class="article-badge" style="background: ${badgeColor};">${prov.clause.split(' ')[0]}</span>
+                      <span class="statute-name">${notice.name}</span>
+                    </div>
+                    <span class="tier-badge" style="background: ${badgeBg}; color: ${badgeColor}; border-color: ${badgeColor};">
+                      ${notice.issuing_agency} 고시 (${notice.notice_number.split(' ')[0]})
+                    </span>
+                  </div>
+                  <div class="statute-body">
+                    <strong style="color: #f1f5f9; display:block; margin-bottom:6px;">📌 ${prov.clause}</strong>
+                    <div style="white-space: pre-line; line-height: 1.6;">${prov.content}</div>
+                  </div>
                 </div>
-                <span class="tier-badge" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24; border-color: rgba(245, 158, 11, 0.3);">환경부 고시</span>
+              `;
+            }
+          });
+        });
+      } else if (allStatutesData.notices && allStatutesData.notices.key_clauses) {
+        allStatutesData.notices.key_clauses.forEach(art => {
+          const fullText = `${art.article_no} ${art.title} ${art.content}`.toLowerCase();
+          if (!query || fullText.includes(query)) {
+            cardsHtml += `
+              <div class="statute-card">
+                <div class="statute-card-header">
+                  <div class="statute-title-box">
+                    <span class="article-badge" style="background: #f59e0b;">${art.article_no}</span>
+                    <span class="statute-name">${art.title}</span>
+                  </div>
+                  <span class="tier-badge" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24; border-color: rgba(245, 158, 11, 0.3);">환경부 고시</span>
+                </div>
+                <div class="statute-body">${art.content}</div>
               </div>
-              <div class="statute-body">${art.content}</div>
-            </div>
-          `;
-        }
-      });
+            `;
+          }
+        });
+      }
     }
 
     statutesContainer.innerHTML = cardsHtml || '<div class="empty-state">검색 조건과 일치하는 법령 조항이 없습니다.</div>';

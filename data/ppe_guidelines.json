@@ -1,0 +1,75 @@
+{
+  "database_name": "화학물질안전원 유해화학물질 개인보호구 착용안전기준 매트릭스 DB",
+  "notice_ref": "화학물질안전원고시 제2023-9호",
+  "ppe_matrix": [
+    {
+      "substance_group": "강산류 (염산, 황산, 질산, 인산 등)",
+      "hazard_type": "피부 부식, 급성 흡입 독성, 산성 가스 증기",
+      "normal_operation_ppe": {
+        "respirator": "방독마스크 (산성가스용 정화통 B형/E형, 회색/황색 표시)",
+        "suit": "화학물질용 보호복 3형식(액체밀폐) 또는 4형식(분무밀폐)",
+        "gloves": "내산성 보호장갑 (네오프렌, 부틸고무, 니트릴 중작업용)",
+        "boots": "내산성 안전장화 (PVC 또는 특수고무)",
+        "eye_face": "화학물질용 고글 및 안면보호구(Face Shield)"
+      },
+      "emergency_leak_ppe": {
+        "respirator": "전면형 송기마스크 또는 자급식 공기호흡기 (SCBA)",
+        "suit": "화학물질용 보호복 1형식 (완전 밀폐형 가스방호복)",
+        "gloves": "내화학 중작업용 이중 장갑",
+        "boots": "화학물질용 안전장화"
+      }
+    },
+    {
+      "substance_group": "강염기류 (수산화나트륨, 수산화칼륨, 암모니아수 등)",
+      "hazard_type": "피부 및 안구 심각한 부식성 화상, 실명 위험",
+      "normal_operation_ppe": {
+        "respirator": "방독마스크 (암모니아용 K형 녹색 정화통 또는 미스트 방진/방독 겸용)",
+        "suit": "화학물질용 보호복 4형식 또는 내알칼리 화학보호 앞치마/토시",
+        "gloves": "내알칼리성 보호장갑 (천연고무, 네오프렌, 니트릴)",
+        "boots": "내화학 안전장화",
+        "eye_face": "안면보호구(Face Shield) + 밀착형 고글 (필수)"
+      },
+      "emergency_leak_ppe": {
+        "respirator": "공기호흡기 (SCBA)",
+        "suit": "화학물질용 보호복 1형식 또는 2형식",
+        "gloves": "이중 내화학 장갑",
+        "boots": "화학용 안전장화"
+      }
+    },
+    {
+      "substance_group": "맹독성/초위험물질 (불산 HF, 시안화나트륨, 포스겐 등)",
+      "hazard_type": "극미량 노출 시에도 전신 중독 및 치사, 뼈 침투 칼슘고갈",
+      "normal_operation_ppe": {
+        "respirator": "전면형 방독마스크 (불산 전용 정화통) 또는 송기마스크",
+        "suit": "화학물질용 보호복 3형식(불소고무 재질 권장)",
+        "gloves": "불소고무(Viton) 또는 부틸고무 보호장갑",
+        "boots": "내불산 특수 안전장화",
+        "eye_face": "전면형 마스크 일체형 렌즈"
+      },
+      "emergency_leak_ppe": {
+        "respirator": "양압식 공기호흡기 (SCBA 필수)",
+        "suit": "화학물질용 보호복 1형식 (Level A 완전 기밀 캡슐형 방호복)",
+        "gloves": "불소/부틸 복합 이중 장갑",
+        "boots": "완전 내화학 장화 + 덧신",
+        "antidote": "글루콘산칼슘(Calcium Gluconate) 2.5% 젤 상시 비치"
+      }
+    },
+    {
+      "substance_group": "유기용제 및 인화성/환각물질 (톨루엔, 벤젠, 자일렌, 메탄올 등)",
+      "hazard_type": "중추신경계 마비, 인화성 화재, 발암성",
+      "normal_operation_ppe": {
+        "respirator": "방독마스크 (유기화합물용 정화통 A형, 갈색 표시)",
+        "suit": "정전기 방지 기능 화학물질용 보호복 4형식/5형식",
+        "gloves": "내용제성 보호장갑 (PVA, 니트릴, 불소고무)",
+        "boots": "정전기 방지 내유화학 안전화",
+        "eye_face": "보안경 및 고글"
+      },
+      "emergency_leak_ppe": {
+        "respirator": "방폭형 공기호흡기 (SCBA)",
+        "suit": "방폭/난연 1형식 가스보호복",
+        "gloves": "이중 PVA/Nitrile 장갑",
+        "boots": "정전기 방지 안전장화"
+      }
+    }
+  ]
+}

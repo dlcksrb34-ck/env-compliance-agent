@@ -295,6 +295,27 @@ app.get('/api/laws', (req, res) => {
   }
 });
 
+
+// Comprehensive 12 Notices endpoint
+app.get('/api/notices', (req, res) => {
+  try {
+    const data = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/notices_comprehensive.json'), 'utf8'));
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: '고시 데이터 로드 실패' });
+  }
+});
+
+// PPE Guidelines endpoint
+app.get('/api/ppe-matrix', (req, res) => {
+  try {
+    const data = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/ppe_guidelines.json'), 'utf8'));
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: '보호구 데이터 로드 실패' });
+  }
+});
+
 // Root fallback
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));

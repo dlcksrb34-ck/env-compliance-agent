@@ -131,6 +131,25 @@ function tokenize(text) {
 // Key phrase priorities (Specific topics get ultra-high boost)
 const TOPIC_PRIORITIES = [
   {
+    topic: '개인보호구_고시_기준',
+    keywords: ['개인보호구', '보호구', '방독마스크', '정화통', '보호복', '불산 보호구', '염산 마스크', '황산 보호구', '정화통 색상', 'a형 정화통', 'b형 정화통', 'k형', '보호복 1형식', '보호복 3형식', '보호장갑', '보호구 고시', '마스크 정화통', '개인보호구 고시'],
+    targetMatrixId: 'CCA-016',
+    targetQnaId: 'QNA-018'
+  },
+  {
+    topic: '환경부_안전원_고시_목록',
+    keywords: ['환경부고시', '안전원고시', '고시 목록', '고시 규정', '고시 기준', '화관법 고시', '화학물질 고시', '고시 체계'],
+    targetMatrixId: null,
+    targetQnaId: 'QNA-019'
+  },
+  {
+    topic: '소량취급시설_별표1_수량',
+    keywords: ['소량취급시설 기준', '소량고시 수량', '소량기준 표', '별표 1 수량', '소량 보관량', '일일 취급량', '소량 특례', '소량기준'],
+    targetMatrixId: 'CCA-011',
+    targetQnaId: 'QNA-020'
+  },
+
+  {
     topic: '확인명세서_누락',
     keywords: ['확인명세서', '확인결과서', '수입제품 확인', '화학물질 확인', '통관 누락', '1건 제출 누락', 'loc', 'letter of confirmation', 'cbi'],
     targetMatrixId: 'CCA-001',
