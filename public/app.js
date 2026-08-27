@@ -1010,9 +1010,14 @@ document.addEventListener('DOMContentLoaded', () => {
   loadChecklistData();
 
   // ========================================================
-  // 📊 Admin Access & IP Logs Module
-  // ========================================================
-  const btnOpenLogsModal = document.getElementById('btn-open-logs-modal');
+  // 📊 Admin Access & IP Logs Module (Secret Trigger + PIN Protected)
+  const adminAuthModal = document.getElementById('admin-auth-modal');
+  const btnCloseAdminAuth = document.getElementById('btn-close-admin-auth');
+  const btnCancelAdminAuth = document.getElementById('btn-cancel-admin-auth');
+  const adminAuthForm = document.getElementById('admin-auth-form');
+  const inputAdminPin = document.getElementById('input-admin-pin');
+  const adminAuthError = document.getElementById('admin-auth-error');
+
   const logsModal = document.getElementById('logs-modal');
   const btnCloseLogsModal = document.getElementById('btn-close-logs-modal');
   const logsTableBody = document.getElementById('logs-table-body');
@@ -1025,6 +1030,32 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnClearLogs = document.getElementById('btn-clear-logs');
 
   let rawLogsData = [];
+  let currentAdminPin = sessionStorage.getItem('env_admin_pin') || '';
+
+  function openAdminAuthModal() {
+    if (currentAdminPin) {
+      openLogsDashboard();
+      return;
+    }
+    if (adminAuthModal) {
+      inputAdminPin.value = '';
+      if (adminAuthError) adminAuthError.style.display = 'none';
+      adminAuthModal.classList.add('active');
+      setTimeout(() => inputAdminPin && inputAdminPin.focus(), 100);
+    }
+  }
+
+  function closeAdminAuthModal() {
+    if (adminAuthModal) adminAuthModal.classList.remove('active');
+  }
+
+  function openLogsDashboard() {
+    closeAdminAuthModal();
+    if (logsModal) {
+      logsModal.classList.add('active');
+      fetchAndRenderLogs();
+    }
+  }
 
   function escapeLogHtml(str) {
     if (!str) return '';
@@ -1035,7 +1066,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!logsTableBody) return;
     try {
       logsTableBody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--text-muted); padding:30px;">로그 불러오는 중...</td></tr>';
-      const res = await fetch('/api/admin/logs');
+      const res = await fetch('/api/admin/logs', {
+        headers: { 'x-admin-pin': currentAdminPin }
+      });
+      if (res.status === 403) {
+        currentAdminPin = '';
+        sessionStorage.removeItem('env_admin_pin');
+        if (logsModal) logsModal.classList.remove('active');
+        alert('관리자 인증이 만료되었거나 비밀번호가 올바르지 않습니다.');
+        openAdminAuthModal();
+        return;
+      }
       const data = await res.json();
       rawLogsData = data.logs || [];
       
@@ -1077,23 +1118,43 @@ document.addEventListener('DOMContentLoaded', () => {
     `).join('');
   }
 
-  if (btnOpenLogsModal && logsModal) {
-    btnOpenLogsModal.addEventListener('click', () => {
-      logsModal.classList.add('active');
-      fetchAndRenderLogs();
+  // Handle PIN Form Submit
+  if (adminAuthForm) {
+    adminAuthForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const enteredPin = (inputAdminPin.value || '').trim();
+      if (!enteredPin) return;
+
+      try {
+        const res = await fetch('/api/admin/verify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ pin: enteredPin })
+        });
+        const result = await res.json();
+        if (res.ok && result.success) {
+          currentAdminPin = enteredPin;
+          sessionStorage.setItem('env_admin_pin', enteredPin);
+          openLogsDashboard();
+        } else {
+          if (adminAuthError) {
+            adminAuthError.textContent = result.error || '비밀번호가 일치하지 않습니다.';
+            adminAuthError.style.display = 'block';
+          }
+        }
+      } catch (err) {
+        if (adminAuthError) {
+          adminAuthError.textContent = '인증 요청 오류: ' + err.message;
+          adminAuthError.style.display = 'block';
+        }
+      }
     });
   }
 
+  if (btnCloseAdminAuth) btnCloseAdminAuth.addEventListener('click', closeAdminAuthModal);
+  if (btnCancelAdminAuth) btnCancelAdminAuth.addEventListener('click', closeAdminAuthModal);
   if (btnCloseLogsModal && logsModal) {
-    btnCloseLogsModal.addEventListener('click', () => {
-      logsModal.classList.remove('active');
-    });
-  }
-
-  if (logsModal) {
-    logsModal.addEventListener('click', (e) => {
-      if (e.target === logsModal) logsModal.classList.remove('active');
-    });
+    btnCloseLogsModal.addEventListener('click', () => logsModal.classList.remove('active'));
   }
 
   if (logsSearchInput) {
@@ -1107,7 +1168,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnClearLogs) {
     btnClearLogs.addEventListener('click', async () => {
       if (confirm('저장된 모든 접속 로그를 삭제하시겠습니까?')) {
-        await fetch('/api/admin/logs', { method: 'DELETE' });
+        await fetch('/api/admin/logs', {
+          method: 'DELETE',
+          headers: { 'x-admin-pin': currentAdminPin }
+        });
         fetchAndRenderLogs();
       }
     });
@@ -1131,5 +1195,38 @@ document.addEventListener('DOMContentLoaded', () => {
       a.download = `환경법규_에이전트_접속로그_${new Date().toISOString().slice(0,10)}.csv`;
       a.click();
     });
+  }
+
+  // ----------------------------------------------------
+  // 🤫 Secret Triggers for Admin Access
+  // ----------------------------------------------------
+  // Trigger 1: Shortcut Ctrl + Shift + A (또는 Ctrl + Shift + L)
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.shiftKey && (e.key === 'A' || e.key === 'a' || e.key === 'ㅁ' || e.key === 'L' || e.key === 'l' || e.key === 'ㅣ')) {
+      e.preventDefault();
+      openAdminAuthModal();
+    }
+  });
+
+  // Trigger 2: Secret Triple Click on Brand Logo / Title
+  const brandElement = document.querySelector('.brand');
+  let brandClickCount = 0;
+  let brandClickTimer = null;
+  if (brandElement) {
+    brandElement.style.cursor = 'pointer';
+    brandElement.addEventListener('click', () => {
+      brandClickCount++;
+      clearTimeout(brandClickTimer);
+      brandClickTimer = setTimeout(() => { brandClickCount = 0; }, 800);
+      if (brandClickCount >= 3) {
+        brandClickCount = 0;
+        openAdminAuthModal();
+      }
+    });
+  }
+
+  // Trigger 3: Secret URL query parameter (https://.../?admin=true)
+  if (new URLSearchParams(window.location.search).get('admin') === 'true') {
+    setTimeout(openAdminAuthModal, 500);
   }
 });

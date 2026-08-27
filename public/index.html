@@ -127,10 +127,7 @@
             📘 통합 매뉴얼
           </a>
 
-          <!-- Admin Logs Button -->
-          <button class="btn btn-secondary btn-sm" id="btn-open-logs-modal" title="접속자 IP 및 질문 내역 확인">
-            📊 이용 로그 (Admin)
-          </button>
+          
 
           <!-- API Key Button -->
           <button class="btn btn-secondary btn-sm" id="btn-open-api-modal">
@@ -558,6 +555,36 @@
           </table>
         </div>
 
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Secret Admin Authentication Modal -->
+  <div class="modal-overlay" id="admin-auth-modal">
+    <div class="modal-card" style="max-width: 420px;">
+      <div class="modal-header">
+        <div class="modal-title-box">
+          <span class="modal-icon">🔒</span>
+          <h3>관리자 전용 인증</h3>
+        </div>
+        <button class="btn-close-modal" id="btn-close-admin-auth">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-desc">
+          접속자 IP 및 이용 로그 조회를 위해 <strong>관리자 비밀번호</strong>를 입력해 주세요.
+        </p>
+        <form id="admin-auth-form">
+          <div class="form-group">
+            <label for="input-admin-pin">관리자 비밀번호 (PIN)</label>
+            <input type="password" id="input-admin-pin" class="form-control" placeholder="비밀번호 입력..." autocomplete="current-password" required autofocus />
+          </div>
+          <div id="admin-auth-error" class="test-status-box error" style="display: none; margin-top: 10px;"></div>
+          <div class="modal-actions" style="margin-top: 1.2rem;">
+            <button type="button" class="btn btn-secondary" id="btn-cancel-admin-auth">취소</button>
+            <button type="submit" class="btn btn-primary" id="btn-submit-admin-pin">인증 및 접속</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

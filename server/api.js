@@ -8,6 +8,7 @@ const llmEngine = require('./llm_engine');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const ADMIN_PIN = process.env.ADMIN_PIN || '1234';
 
 app.set('trust proxy', true);
 app.use(cors());
@@ -43,6 +44,46 @@ function recordLog(entry) {
     fs.writeFileSync(LOG_FILE, JSON.stringify(accessLogs.slice(0, 200), null, 2));
   } catch (e) {}
 }
+
+// Admin Auth Middleware
+function checkAdminAuth(req, res, next) {
+  const pin = req.headers['x-admin-pin'] || req.query.pin;
+  if (pin && pin === ADMIN_PIN) {
+    return next();
+  }
+  return res.status(403).json({ error: '관리자 인증 실패: 올바른 비밀번호를 입력해 주세요.' });
+}
+
+// Admin PIN verify endpoint
+app.post('/api/admin/verify', (req, res) => {
+  const { pin } = req.body;
+  if (pin && pin === ADMIN_PIN) {
+    return res.json({ success: true, message: '관리자 인증 성공' });
+  }
+  return res.status(403).json({ error: '비밀번호가 일치하지 않습니다.' });
+});
+
+// Admin logs endpoint (Protected)
+app.get('/api/admin/logs', checkAdminAuth, (req, res) => {
+  const uniqueIps = new Set(accessLogs.map(l => l.ip)).size;
+  const totalTokens = accessLogs.reduce((acc, l) => acc + (Number(l.tokens) || 0), 0);
+  res.json({
+    total_count: accessLogs.length,
+    unique_ips: uniqueIps,
+    total_tokens: totalTokens,
+    logs: accessLogs
+  });
+});
+
+// Admin clear logs endpoint (Protected)
+app.delete('/api/admin/logs', checkAdminAuth, (req, res) => {
+  accessLogs = [];
+  try {
+    fs.writeFileSync(LOG_FILE, JSON.stringify([], null, 2));
+  } catch (e) {}
+  console.log('[관리자] 접속 로그가 초기화되었습니다.');
+  res.json({ success: true, message: '로그가 성공적으로 초기화되었습니다.' });
+});
 
 // Consultation endpoint (Supports Smart Caching + Selective LLM + Local Engine + IP Logging)
 app.post('/api/consult', async (req, res) => {
@@ -126,28 +167,6 @@ app.post('/api/consult', async (req, res) => {
 // Optimization stats endpoint
 app.get('/api/optimization-stats', (req, res) => {
   res.json(smartRouter.getOptimizationStats());
-});
-
-// Admin logs endpoint
-app.get('/api/admin/logs', (req, res) => {
-  const uniqueIps = new Set(accessLogs.map(l => l.ip)).size;
-  const totalTokens = accessLogs.reduce((acc, l) => acc + (Number(l.tokens) || 0), 0);
-  res.json({
-    total_count: accessLogs.length,
-    unique_ips: uniqueIps,
-    total_tokens: totalTokens,
-    logs: accessLogs
-  });
-});
-
-// Admin clear logs endpoint
-app.delete('/api/admin/logs', (req, res) => {
-  accessLogs = [];
-  try {
-    fs.writeFileSync(LOG_FILE, JSON.stringify([], null, 2));
-  } catch (e) {}
-  console.log('[관리자] 접속 로그가 초기화되었습니다.');
-  res.json({ success: true, message: '로그가 성공적으로 초기화되었습니다.' });
 });
 
 // Test API Key endpoint
@@ -285,7 +304,7 @@ app.listen(PORT, () => {
   console.log(`====================================================`);
   console.log(`🌿 환경규제 AI 에이전트 (화학물질관리법 특화)`);
   console.log(`🤖 OpenAI LLM + 로컬 법률 RAG 지원 서버 구동`);
-  console.log(`📊 IP별 접속 및 질문 실시간 로깅 시스템 가동 중`);
+  console.log(`🔒 관리자 인증(PIN) 보호 활성화`);
   console.log(`🚀 서버 주소: http://localhost:${PORT}`);
   console.log(`====================================================`);
 });
