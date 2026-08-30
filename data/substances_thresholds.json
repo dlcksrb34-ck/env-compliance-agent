@@ -143,7 +143,7 @@
         "small_storage_ton": 6,
         "small_daily_kg": 400
       },
-      "guidelines": "0.3% 이상 유독물질. 하위 규정수량 20톤."
+      "guidelines": "0.3% 이상 인체급성유해성물질. 하위 규정수량 20톤."
     },
     {
       "name_ko": "수산화칼륨",

@@ -12,8 +12,22 @@ const ADMIN_PIN = process.env.ADMIN_PIN || '1234';
 
 app.set('trust proxy', true);
 app.use(cors());
-app.use(express.json());
-app.use(express.static(path.join(__dirname, '../public')));
+// Disable caching completely for instant mobile updates
+app.use((req, res, next) => {
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.set('Pragma', 'no-cache');
+  res.set('Expires', '0');
+  res.set('Surrogate-Control', 'no-store');
+  next();
+});
+
+app.use(express.static(path.join(__dirname, '../public'), {
+  etag: false,
+  maxAge: 0,
+  setHeaders: (res) => {
+    res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  }
+}));
 
 const smartRouter = require('./smart_router');
 
@@ -26,23 +40,44 @@ function getClientIp(req) {
   return req.ip || (req.connection && req.connection.remoteAddress) || '127.0.0.1';
 }
 
-// In-Memory + Persistent Access Logging
-const LOG_FILE = path.join(__dirname, '../data/access_logs.json');
+// In-Memory + Persistent Access Logging (Reliable Disk Sync)
+const DATA_DIR = path.join(__dirname, '../data');
+const LOG_FILE = path.join(DATA_DIR, 'access_logs.json');
+
+// Ensure data directory exists
+if (!fs.existsSync(DATA_DIR)) {
+  try {
+    fs.mkdirSync(DATA_DIR, { recursive: true });
+  } catch (e) {
+    console.error('Failed to create data directory:', e.message);
+  }
+}
+
 let accessLogs = [];
 try {
   if (fs.existsSync(LOG_FILE)) {
-    accessLogs = JSON.parse(fs.readFileSync(LOG_FILE, 'utf8'));
+    const raw = fs.readFileSync(LOG_FILE, 'utf8');
+    accessLogs = JSON.parse(raw);
+    if (!Array.isArray(accessLogs)) accessLogs = [];
+    console.log(`📊 [사용이력] 기존 접속 로그 ${accessLogs.length}건 안전하게 로드 완료`);
+  } else {
+    fs.writeFileSync(LOG_FILE, JSON.stringify([], null, 2), 'utf8');
+    console.log(`📊 [사용이력] 신규 로그 파일 생성 완료: ${LOG_FILE}`);
   }
 } catch (e) {
+  console.error('⚠️ [사용이력] 로그 파일 로드 중 오류 발생:', e.message);
   accessLogs = [];
 }
 
 function recordLog(entry) {
   accessLogs.unshift(entry);
-  if (accessLogs.length > 500) accessLogs = accessLogs.slice(0, 500);
+  if (accessLogs.length > 1000) accessLogs = accessLogs.slice(0, 1000);
   try {
-    fs.writeFileSync(LOG_FILE, JSON.stringify(accessLogs.slice(0, 200), null, 2));
-  } catch (e) {}
+    // Synchronously write up to 1,000 logs to disk to prevent any loss
+    fs.writeFileSync(LOG_FILE, JSON.stringify(accessLogs, null, 2), 'utf8');
+  } catch (e) {
+    console.error('❌ [사용이력] 로그 디스크 저장 실패:', e.message);
+  }
 }
 
 // Admin Auth Middleware

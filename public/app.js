@@ -328,6 +328,10 @@ document.addEventListener('DOMContentLoaded', () => {
       headerLawTitle.textContent = `🟢 ${selectedLaw.name_ko} (${selectedLaw.code}) 모드`;
       currentLawBadge.textContent = `${selectedLaw.code} 전문 모드`;
       chatWelcomeBotName.textContent = `ECO-COMPLIANCE AI (${selectedLaw.name_ko} 모드)`;
+      const mobileCurrentLaw = document.getElementById('mobile-current-law');
+      if (mobileCurrentLaw) {
+        mobileCurrentLaw.textContent = `${selectedLaw.code} 모드`;
+      }
       
       updateQuickChips(lawId);
       loadViolationsList();
@@ -345,9 +349,54 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Switch Tab
+  // Mobile Navigation & Drawer Elements
+  const appSidebar = document.getElementById('app-sidebar');
+  const sidebarBackdrop = document.getElementById('sidebar-backdrop');
+  const btnOpenSidebar = document.getElementById('btn-open-sidebar');
+  const btnCloseSidebar = document.getElementById('btn-close-sidebar');
+  const mobileNavItems = document.querySelectorAll('.mobile-nav-item');
+  const mobileBtnApi = document.getElementById('mobile-btn-api');
+  const mobileBtnTheme = document.getElementById('mobile-btn-theme');
+
+  function openMobileSidebar() {
+    if (appSidebar) appSidebar.classList.add('mobile-open');
+    if (sidebarBackdrop) sidebarBackdrop.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMobileSidebar() {
+    if (appSidebar) appSidebar.classList.remove('mobile-open');
+    if (sidebarBackdrop) sidebarBackdrop.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  if (btnOpenSidebar) btnOpenSidebar.addEventListener('click', openMobileSidebar);
+  if (btnCloseSidebar) btnCloseSidebar.addEventListener('click', closeMobileSidebar);
+  if (sidebarBackdrop) sidebarBackdrop.addEventListener('click', closeMobileSidebar);
+
+  if (mobileBtnApi) {
+    mobileBtnApi.addEventListener('click', () => {
+      btnOpenApiModal.click();
+    });
+  }
+
+  if (mobileBtnTheme) {
+    mobileBtnTheme.addEventListener('click', () => {
+      themeToggleBtn.click();
+    });
+  }
+
+  // Switch Tab (Synchronizes desktop sidebar and mobile bottom navigation)
   function switchTab(tabId) {
     tabButtons.forEach(btn => {
+      if (btn.dataset.tab === tabId) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+
+    mobileNavItems.forEach(btn => {
       if (btn.dataset.tab === tabId) {
         btn.classList.add('active');
       } else {
@@ -367,9 +416,19 @@ document.addEventListener('DOMContentLoaded', () => {
       pageTitle.textContent = tabInfo[tabId].title;
       pageSubtitle.textContent = tabInfo[tabId].subtitle;
     }
+
+    // Auto-close mobile drawer after menu item click
+    closeMobileSidebar();
+
+    // Scroll to top smoothly on mobile
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   tabButtons.forEach(btn => {
+    btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+  });
+
+  mobileNavItems.forEach(btn => {
     btn.addEventListener('click', () => switchTab(btn.dataset.tab));
   });
 

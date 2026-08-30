@@ -679,24 +679,37 @@ body.light-theme .nav-item.active {
   position: sticky;
   top: 0;
   z-index: 10;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.header-left {
+  min-width: 0;
+  flex: 1 1 320px;
 }
 
 .page-title {
   font-size: 1.35rem;
   font-weight: 800;
   letter-spacing: -0.01em;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 .page-subtitle {
   font-size: 0.85rem;
   color: var(--text-secondary);
   margin-top: 2px;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 .header-actions {
   display: flex;
   align-items: center;
   gap: 12px;
+  flex-wrap: wrap;
+  flex-shrink: 0;
 }
 
 .key-status-dot {
@@ -2244,3 +2257,550 @@ body.light-theme .logs-table td {
   background: rgba(6, 182, 212, 0.15);
   color: #22d3ee;
 }
+
+/* ========================================================
+   📱 Mobile Header & Bottom Navigation Bar Defaults
+   ======================================================== */
+.mobile-top-bar {
+  display: none;
+}
+
+.mobile-bottom-nav {
+  display: none;
+}
+
+.sidebar-close-btn {
+  display: none;
+}
+
+.sidebar-backdrop {
+  display: none;
+}
+
+.sidebar-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* ========================================================
+   📱 Responsive Breakpoints & Mobile Optimization (<= 992px)
+   ======================================================== */
+@media (max-width: 992px) {
+  /* Prevent horizontal scroll */
+  html, body {
+    overflow-x: hidden !important;
+    width: 100% !important;
+    position: relative;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  .app-container {
+    display: block !important;
+    width: 100% !important;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  /* 1. Mobile Top Bar (Enforced) */
+  .mobile-top-bar {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: rgba(15, 22, 36, 0.95);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 95;
+    height: 56px;
+  }
+
+  /* Hide Desktop Top Header on Mobile (Prevent single-char vertical wrapping) */
+  .top-header {
+    display: none !important;
+  }
+
+  body.light-theme .mobile-top-bar {
+    background: rgba(255, 255, 255, 0.96);
+    border-bottom: 1px solid #e2e8f0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+
+  .mobile-menu-btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+
+  .mobile-menu-btn:active {
+    background: rgba(255, 255, 255, 0.15);
+    transform: scale(0.96);
+  }
+
+  body.light-theme .mobile-menu-btn {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+    color: #0f172a;
+  }
+
+  .mobile-brand-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .mobile-title-main {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 0.95rem;
+    letter-spacing: -0.01em;
+    background: linear-gradient(90deg, #fff, #94a3b8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  body.light-theme .mobile-title-main {
+    background: linear-gradient(90deg, #0f172a, #334155);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .mobile-law-tag {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--accent-emerald);
+    background: rgba(16, 185, 129, 0.15);
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+
+  .mobile-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .mobile-icon-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .mobile-icon-btn:active {
+    transform: scale(0.94);
+  }
+
+  body.light-theme .mobile-icon-btn {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+  }
+
+  /* 2. Slide-over Mobile Drawer Sidebar */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 290px;
+    max-width: 86vw;
+    height: 100vh;
+    height: 100dvh;
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.28s cubic-bezier(0.33, 1, 0.68, 1);
+    box-shadow: 10px 0 35px rgba(0, 0, 0, 0.6);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 20px 16px;
+  }
+
+  .sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  .sidebar-close-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    font-size: 1.3rem;
+    cursor: pointer;
+    line-height: 1;
+    margin-left: auto;
+  }
+
+  body.light-theme .sidebar-close-btn {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+    color: #334155;
+  }
+
+  .sidebar-backdrop {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+
+  .sidebar-backdrop.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Hide Desktop Top Header on Mobile */
+  .top-header {
+    display: none;
+  }
+
+  /* 3. Main Content & Panels */
+  .main-content {
+    height: auto;
+    min-height: 100vh;
+    padding-bottom: calc(72px + env(safe-area-inset-bottom, 12px));
+    overflow-y: visible;
+  }
+
+  .tab-panel {
+    padding: 14px 12px;
+  }
+
+  /* 4. Chat & Quick Chips Mobile Styling */
+  .chat-layout {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    height: auto;
+  }
+
+  .chat-container {
+    min-height: calc(100dvh - 170px);
+    border-radius: var(--radius-sm);
+  }
+
+  .quick-chips-wrapper {
+    padding: 10px 12px;
+  }
+
+  .chips-label {
+    font-size: 0.72rem;
+    margin-bottom: 6px;
+  }
+
+  .chips-list {
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 6px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .chips-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .chip {
+    font-size: 0.75rem;
+    padding: 6px 12px;
+    display: inline-block;
+    touch-action: manipulation;
+  }
+
+  .messages-container {
+    padding: 14px 10px;
+    gap: 14px;
+    min-height: 300px;
+  }
+
+  .message-row {
+    max-width: 98%;
+    gap: 8px;
+  }
+
+  .avatar {
+    width: 32px;
+    height: 32px;
+    font-size: 0.95rem;
+  }
+
+  .message-bubble {
+    padding: 12px 14px;
+    font-size: 0.88rem;
+    border-radius: 12px;
+  }
+
+  .bot-bubble {
+    width: 100%;
+  }
+
+  .bot-header {
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+  }
+
+  .bot-name {
+    font-size: 0.8rem;
+  }
+
+  /* Chat Input Box on Mobile (Sticky above Bottom Nav) */
+  .chat-input-form {
+    padding: 8px 10px;
+    position: sticky;
+    bottom: calc(58px + env(safe-area-inset-bottom, 0px));
+    background: rgba(15, 22, 36, 0.97);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid var(--border-color);
+    z-index: 85;
+    border-radius: var(--radius-sm);
+    margin: 4px 0 0 0;
+  }
+
+  body.light-theme .chat-input-form {
+    background: rgba(255, 255, 255, 0.98);
+    border-top: 1px solid #e2e8f0;
+  }
+
+  .input-wrapper {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  #chat-input {
+    font-size: 16px !important; /* CRITICAL: Prevents auto-zoom on iOS */
+    padding: 10px 12px;
+    min-height: 44px;
+    max-height: 100px;
+  }
+
+  .btn-send {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .input-helper {
+    font-size: 0.68rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    margin-top: 4px;
+  }
+
+  .legal-disclaimer {
+    display: none; /* Hide lengthy disclaimer in mobile input helper */
+  }
+
+  /* 5. Mobile Bottom Navigation Bar */
+  .mobile-bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: calc(58px + env(safe-area-inset-bottom, 8px));
+    padding-bottom: env(safe-area-inset-bottom, 8px);
+    background: rgba(15, 22, 36, 0.97);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border-color);
+    z-index: 90;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
+  }
+
+  body.light-theme .mobile-bottom-nav {
+    background: rgba(255, 255, 255, 0.98);
+    border-top: 1px solid #e2e8f0;
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.05);
+  }
+
+  .mobile-nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 6px 0;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+  }
+
+  .mobile-nav-item .mobile-nav-icon {
+    font-size: 1.15rem;
+    line-height: 1;
+    transition: transform 0.15s ease;
+  }
+
+  .mobile-nav-item:active {
+    transform: scale(0.92);
+  }
+
+  .mobile-nav-item.active {
+    color: var(--accent-primary);
+  }
+
+  body.light-theme .mobile-nav-item.active {
+    color: #4f46e5;
+  }
+
+  .mobile-nav-item.active .mobile-nav-icon {
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 6px rgba(99, 102, 241, 0.6));
+  }
+
+  /* 6. Calculator Mobile Refinement */
+  .calc-form-card .card-body {
+    padding: 16px 14px;
+  }
+
+  .radio-group {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+
+  .col-half {
+    width: 100%;
+  }
+
+  /* 7. Statutes & Filter Pills */
+  .filter-pills {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 6px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .filter-pills::-webkit-scrollbar {
+    display: none;
+  }
+
+  .pill {
+    white-space: nowrap;
+    padding: 6px 12px;
+    font-size: 0.78rem;
+  }
+
+  .statute-card {
+    padding: 14px 14px;
+  }
+
+  .statute-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .statute-body {
+    font-size: 0.84rem;
+    line-height: 1.6;
+  }
+
+  /* 8. 6 Core Environmental Laws Hub Portal */
+  .laws-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .hub-intro-card {
+    flex-direction: column;
+    padding: 16px 14px;
+    gap: 12px;
+  }
+
+  .hub-stats-badge {
+    align-self: flex-start;
+  }
+
+  /* 9. Modals on Mobile */
+  .modal-overlay {
+    padding: 12px;
+  }
+
+  .modal-card {
+    width: 95vw !important;
+    max-width: 95vw !important;
+    max-height: 90vh !important;
+    max-height: 90dvh !important;
+    margin: 12px auto !important;
+    padding: 18px 16px !important;
+    border-radius: 16px !important;
+    overflow-y: auto;
+  }
+
+  .logs-toolbar {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .logs-actions {
+    width: 100%;
+    display: flex;
+    gap: 6px;
+    justify-content: flex-start;
+    overflow-x: auto;
+  }
+
+  .logs-table-wrapper {
+    max-height: 340px;
+  }
+
+  .logs-table th, .logs-table td {
+    padding: 8px 10px;
+    font-size: 0.76rem;
+  }
+}
+
