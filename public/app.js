@@ -450,17 +450,101 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Markdown parser helper for chat response
+  // Markdown parser helper for chat response (Full table, list, divider, heading support)
   function formatMarkdown(md) {
-    let html = md
-      .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+    if (!md) return '';
+    let text = md.trim();
+
+    // 1. Normalize inline single-line tables: '| |' -> '|\n|'
+    text = text.replace(/\|\s*\|/g, '|\n|');
+
+    // 2. Parse Markdown Tables
+    const lines = text.split('\n');
+    const out = [];
+    let inTable = false;
+    let tableHeader = [];
+    let tableRows = [];
+
+    function parseCell(content) {
+      return content
+        .trim()
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+        .replace(/`([^`]+)`/g, '<code>$1</code>');
+    }
+
+    function flushTable() {
+      if (!inTable) return;
+      if (tableHeader.length > 0 || tableRows.length > 0) {
+        let html = '<div class="chat-table-wrapper"><table class="chat-table">';
+        if (tableHeader.length > 0) {
+          html += '<thead><tr>';
+          tableHeader.forEach(cell => {
+            html += `<th>${parseCell(cell)}</th>`;
+          });
+          html += '</tr></thead>';
+        }
+        if (tableRows.length > 0) {
+          html += '<tbody>';
+          tableRows.forEach(row => {
+            html += '<tr>';
+            row.forEach(cell => {
+              html += `<td>${parseCell(cell)}</td>`;
+            });
+            html += '</tr>';
+          });
+          html += '</tbody>';
+        }
+        html += '</table></div>';
+        out.push(html);
+      }
+      inTable = false;
+      tableHeader = [];
+      tableRows = [];
+    }
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim();
+      const isTableRow = /^\|(.+)\|$/.test(line);
+      const isTableSep = /^\|(\s*:?-+:?\s*\|)+$/.test(line);
+
+      if (isTableRow) {
+        const cells = line.slice(1, -1).split('|').map(c => c.trim());
+        if (!inTable) {
+          inTable = true;
+          tableHeader = cells;
+        } else if (isTableSep) {
+          // Table separator row - skip
+        } else {
+          tableRows.push(cells);
+        }
+      } else {
+        if (inTable) flushTable();
+        out.push(line);
+      }
+    }
+    if (inTable) flushTable();
+
+    text = out.join('\n');
+
+    // 3. Format Headings, formatting, lists, hr, blockquotes
+    text = text
       .replace(/^#### (.*$)/gim, '<h4>$1</h4>')
+      .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+      .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+      .replace(/^# (.*$)/gim, '<h2>$1</h2>')
+      .replace(/^---$/gim, '<hr class="chat-hr">')
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
       .replace(/\*(.*?)\*/g, '<em>$1</em>')
-      .replace(/^\- (.*$)/gim, '<li>$1</li>')
+      .replace(/`([^`]+)`/g, '<code>$1</code>')
+      .replace(/^> (.*$)/gim, '<blockquote class="chat-quote">$1</blockquote>')
+      .replace(/^[\*\-] (.*$)/gim, '<li>$1</li>')
+      .replace(/^(\d+)[\.\)]\s*(.*$)/gim, '<li><strong style="color:var(--accent-primary)">$1.</strong> $2</li>')
       .replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>')
-      .replace(/\n\n/g, '<br>');
-    return html;
+      .replace(/\n\n/g, '<br><br>')
+      .replace(/\n/g, '<br>');
+
+    return text;
   }
 
   // Add message to chat UI
