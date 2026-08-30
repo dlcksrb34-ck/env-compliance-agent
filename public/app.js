@@ -61,24 +61,21 @@ document.addEventListener('DOMContentLoaded', () => {
   let savedModel = localStorage.getItem('cca_openai_model') || 'gpt-5.5';
 
   function updateKeyStatusUI() {
+    if (llmHintBanner) {
+      llmHintBanner.style.display = 'none';
+    }
     if (savedApiKey && savedApiKey.trim()) {
       headerKeyDot.classList.add('active');
-      headerKeyText.textContent = `🟢 ${savedModel} RAG 활성`;
+      headerKeyText.textContent = `🟢 ${savedModel} 사용자 키`;
       modelModeBadge.textContent = `${savedModel} RAG`;
       modelModeBadge.style.color = '#818cf8';
       engineStatusText.textContent = 'OpenAI + 로컬 RAG 가동';
-      if (llmHintBanner) {
-        llmHintBanner.style.display = 'none';
-      }
     } else {
-      headerKeyDot.classList.remove('active');
-      headerKeyText.textContent = '🔑 OpenAI API 연동';
-      modelModeBadge.textContent = '로컬 룰 엔진';
-      modelModeBadge.style.color = 'var(--text-secondary)';
-      engineStatusText.textContent = '로컬 법령 지식베이스 가동';
-      if (llmHintBanner) {
-        llmHintBanner.style.display = 'block';
-      }
+      headerKeyDot.classList.add('active');
+      headerKeyText.textContent = '🟢 AI 통합 분석 가동 중';
+      modelModeBadge.textContent = 'GPT-5.5 / 로컬 RAG';
+      modelModeBadge.style.color = '#818cf8';
+      engineStatusText.textContent = 'AI + 로컬 법령 지식베이스 가동';
     }
   }
 
