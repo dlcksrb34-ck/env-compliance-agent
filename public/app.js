@@ -631,6 +631,9 @@ document.addEventListener('DOMContentLoaded', () => {
     row.appendChild(bubble);
     messagesContainer.appendChild(row);
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    setTimeout(() => {
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }, 60);
   }
 
   // Update Side Context Panel
