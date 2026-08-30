@@ -131,6 +131,12 @@ function tokenize(text) {
 // Key phrase priorities (Specific topics get ultra-high boost)
 const TOPIC_PRIORITIES = [
   {
+    topic: '정기검사_면제기준',
+    keywords: ['정기검사 면제', '검사 면제', '정기검사 면제 기준', '취급시설 검사 면제', '최하위규정수량 미만', '정기검사 안받아도', '정기검사 면제대상', '검사면제', '정기검사 4년', '최하위규정수량 이상'],
+    targetMatrixId: 'CCA-006',
+    targetQnaId: 'QNA-022'
+  },
+  {
     topic: '개인보호구_고시_기준',
     keywords: ['개인보호구', '보호구', '방독마스크', '정화통', '보호복', '불산 보호구', '염산 마스크', '황산 보호구', '정화통 색상', 'a형 정화통', 'b형 정화통', 'k형', '보호복 1형식', '보호복 3형식', '보호장갑', '보호구 고시', '마스크 정화통', '개인보호구 고시'],
     targetMatrixId: 'CCA-016',
@@ -280,6 +286,12 @@ const TOPIC_PRIORITIES = [
     keywords: ['누출됐을때', '누출', '유출', '화학사고 신고', '사고 신고', '즉시 신고', '15분', '골든타임', '신고하는 기준', '신고 기준', '누출시', '누출사고', '사고 났을때'],
     targetMatrixId: 'CCA-015',
     targetQnaId: 'QNA-021'
+  },
+  {
+    topic: '정기검사_면제기준',
+    keywords: ['정기검사 면제', '검사 면제', '정기검사 면제 기준', '취급시설 검사 면제', '최하위규정수량 미만', '정기검사 안받아도', '정기검사 면제대상', '검사면제', '정기검사 4년'],
+    targetMatrixId: 'CCA-006',
+    targetQnaId: 'QNA-022'
   }
 ];
 
