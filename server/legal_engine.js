@@ -274,6 +274,12 @@ const TOPIC_PRIORITIES = [
     keywords: ['영업허가', '무허가 영업', '영업신고', '차등관리', '하위 규정수량', '최하위 규정수량'],
     targetMatrixId: 'CCA-005',
     targetQnaId: 'QNA-007'
+  },
+  {
+    topic: '화학사고_누출신고',
+    keywords: ['누출됐을때', '누출', '유출', '화학사고 신고', '사고 신고', '즉시 신고', '15분', '골든타임', '신고하는 기준', '신고 기준', '누출시', '누출사고', '사고 났을때'],
+    targetMatrixId: 'CCA-015',
+    targetQnaId: 'QNA-021'
   }
 ];
 

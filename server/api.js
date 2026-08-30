@@ -12,6 +12,9 @@ const ADMIN_PIN = process.env.ADMIN_PIN || '1234';
 
 app.set('trust proxy', true);
 app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 // Disable caching completely for instant mobile updates
 app.use((req, res, next) => {
   res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');

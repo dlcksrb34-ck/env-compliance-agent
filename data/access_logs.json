@@ -1,5 +1,31 @@
 [
   {
+    "id": "mtfubnulpgph",
+    "timestamp": "2026-08-30T13:23:43.101Z",
+    "kst_time": "2026. 8. 30. PM 10:23:43",
+    "ip": "::1",
+    "userAgent": "",
+    "type": "질문 상담",
+    "law": "화관법",
+    "query": "유해화학물질이 누출됐을때 신고하는 기준 알려줘",
+    "engine": "로컬 룰 엔진",
+    "tokens": 0,
+    "cost_krw": "0원"
+  },
+  {
+    "id": "mtfu9v5gr1sz",
+    "timestamp": "2026-08-30T13:22:19.252Z",
+    "kst_time": "2026. 8. 30. PM 10:22:19",
+    "ip": "::1",
+    "userAgent": "",
+    "type": "질문 상담",
+    "law": "화관법",
+    "query": "유해화학물질이 누출됐을때 신고하는 기준 알려줘",
+    "engine": "로컬 룰 엔진",
+    "tokens": 0,
+    "cost_krw": "0원"
+  },
+  {
     "id": "mtfkvjghclh6",
     "timestamp": "2026-08-30T08:59:14.370Z",
     "kst_time": "2026. 8. 30. PM 5:59:14",
